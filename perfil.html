@@ -10,6 +10,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem("wuni-theme");
+    if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 
@@ -22,18 +30,31 @@
       <span class="brand-name">Wuni</span>
     </a>
 
-    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
-      <a href="index.html#problema">O problema</a>
-      <a href="index.html#como-funciona">Como funciona</a>
-      <a href="index.html#diferencial">Diferencial</a>
-      <a href="perfil.html" class="is-active">Meu perfil</a>
-      <a href="recomendacoes.html">Recomendações</a>
-      <a href="recomendacoes.html" class="nav-cta">Ver recomendações</a>
-    </nav>
+    <div class="nav-wrap">
+      <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+        <a href="index.html#problema">O problema</a>
+        <a href="index.html#como-funciona">Como funciona</a>
+        <a href="index.html#diferencial">Diferencial</a>
+      </nav>
 
-    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
-      <span></span><span></span><span></span>
-    </button>
+      <div class="header-ctas">
+        <a href="perfil.html" class="nav-cta nav-cta-outline" aria-label="Criar meu perfil">
+          <span class="cta-long">Criar meu perfil</span><span class="cta-short" aria-hidden="true">Perfil</span>
+        </a>
+        <a href="recomendacoes.html" class="nav-cta" aria-label="Ver recomendações">
+          <span class="cta-long">Ver recomendações</span><span class="cta-short" aria-hidden="true">Recomendações</span>
+        </a>
+      </div>
+
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Alternar tema claro/escuro">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+
+      <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </header>
 
