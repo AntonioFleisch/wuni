@@ -217,7 +217,6 @@ p { margin: 0 0 1em; color: var(--ink-700); }
 .footer-inner .brand-mark { color: #fff; }
 .brand-name {
   font-size: 1.05rem;
-  text-transform: lowercase;
   letter-spacing: -0.01em;
 }
 
