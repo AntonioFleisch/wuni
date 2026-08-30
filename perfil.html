@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu perfil — Wuni</title>
+<meta name="description" content="Preencha seu perfil acadêmico, financeiro e de preferências para receber recomendações personalizadas de faculdades no Wuni.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a href="index.html#problema">O problema</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#diferencial">Diferencial</a>
+      <a href="perfil.html" class="is-active">Meu perfil</a>
+      <a href="recomendacoes.html">Recomendações</a>
+      <a href="recomendacoes.html" class="nav-cta">Ver recomendações</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <p class="kicker">Seu perfil</p>
+      <h1>Conte pra gente quem você é</h1>
+      <p>Essas informações alimentam o motor de recomendação do Wuni. Você pode alterá-las aqui sempre que quiser — tudo fica salvo neste navegador.</p>
+    </div>
+  </section>
+
+  <section class="app-shell">
+    <div class="container" style="max-width: 860px;">
+
+      <div class="vocation-callout">
+        <div>
+          <h2>Ainda não sabe o que quer cursar?</h2>
+          <p>Faça o teste vocacional rápido (8 perguntas) e a gente sugere áreas e cursos com a sua cara.</p>
+        </div>
+        <button type="button" class="btn btn-secondary" id="open-quiz">Fazer teste vocacional</button>
+      </div>
+
+      <form id="profile-form">
+
+        <div class="form-section">
+          <h2>Dados do aluno</h2>
+          <p class="form-section-hint">Informações básicas sobre sua situação escolar.</p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="nome">Nome</label>
+              <input type="text" id="nome" name="nome" placeholder="Seu nome">
+            </div>
+            <div class="form-field">
+              <label for="anoEscola">Ano da escola</label>
+              <select id="anoEscola" name="anoEscola">
+                <option value="1º ano">1º ano do ensino médio</option>
+                <option value="2º ano">2º ano do ensino médio</option>
+                <option value="3º ano">3º ano do ensino médio</option>
+                <option value="Concluinte">Já concluí o ensino médio</option>
+              </select>
+            </div>
+          </div>
+          <div class="toggle-row" style="margin-top: 6px;">
+            <div>
+              <div class="toggle-label">Cursou escola pública</div>
+              <div class="toggle-sub">Considera todo o ensino médio, ou a maior parte dele</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="escolaPublica">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Desempenho</h2>
+          <p class="form-section-hint">Suas notas do ENEM (0 a 1000) e, se quiser, a média do histórico escolar.</p>
+          <div class="form-grid cols-5">
+            <div class="form-field">
+              <label for="enem-linguagens">Linguagens</label>
+              <input type="number" id="enem-linguagens" min="0" max="1000" step="1">
+            </div>
+            <div class="form-field">
+              <label for="enem-humanas">Humanas</label>
+              <input type="number" id="enem-humanas" min="0" max="1000" step="1">
+            </div>
+            <div class="form-field">
+              <label for="enem-natureza">Natureza</label>
+              <input type="number" id="enem-natureza" min="0" max="1000" step="1">
+            </div>
+            <div class="form-field">
+              <label for="enem-matematica">Matemática</label>
+              <input type="number" id="enem-matematica" min="0" max="1000" step="1">
+            </div>
+            <div class="form-field">
+              <label for="enem-redacao">Redação</label>
+              <input type="number" id="enem-redacao" min="0" max="1000" step="1">
+            </div>
+          </div>
+          <div class="form-grid" style="margin-top: 18px;">
+            <div class="form-field">
+              <label for="mediaHistorico">Média geral do histórico escolar <span class="field-optional">(opcional, 0 a 10)</span></label>
+              <input type="number" id="mediaHistorico" min="0" max="10" step="0.1">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Situação financeira</h2>
+          <p class="form-section-hint">Usamos isso para calcular o que cabe no seu orçamento.</p>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="rendaPerCapita">Renda familiar per capita</label>
+              <select id="rendaPerCapita">
+                <option value="ate-1-sm">Até 1 salário mínimo</option>
+                <option value="de-1-a-2-sm">De 1 a 2 salários mínimos</option>
+                <option value="de-2-a-3-sm">De 2 a 3 salários mínimos</option>
+                <option value="de-3-a-5-sm">De 3 a 5 salários mínimos</option>
+                <option value="acima-5-sm">Acima de 5 salários mínimos</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="orcamentoMensal">Orçamento mensal disponível (R$)</label>
+              <input type="number" id="orcamentoMensal" min="0" step="50">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Autodeclaração <span class="field-optional">(opcional)</span></h2>
+          <p class="form-section-hint">Usado apenas para identificar cotas e políticas de acesso disponíveis para você.</p>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Autodeclaração PPI</div>
+              <div class="toggle-sub">Preto, pardo ou indígena</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="ppi">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Pessoa com deficiência (PcD)</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="pcd">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h2>Interesses</h2>
+          <p class="form-section-hint">Cursos ou áreas que você tem interesse em estudar. Pode marcar mais de um.</p>
+          <div class="chip-select" id="interesses-select"></div>
+        </div>
+
+        <div class="form-section">
+          <h2>Localização e formato</h2>
+          <p class="form-section-hint">Onde você aceita estudar e como prefere cursar.</p>
+
+          <div class="form-field" style="margin-bottom: 16px;">
+            <label>Onde aceita estudar</label>
+            <div class="chip-select" id="cidades-select"></div>
+          </div>
+
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Aceita morar fora da sua cidade/estado</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="aceitaMorarFora">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+
+          <div class="form-field" style="margin-top: 18px; margin-bottom: 16px;">
+            <label>Turno <span class="field-optional">(deixe em branco se não tiver preferência)</span></label>
+            <div class="chip-select" id="turno-select">
+              <button type="button" class="chip-toggle" data-value="matutino">Matutino</button>
+              <button type="button" class="chip-toggle" data-value="vespertino">Vespertino</button>
+              <button type="button" class="chip-toggle" data-value="noturno">Noturno</button>
+              <button type="button" class="chip-toggle" data-value="integral">Integral</button>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label>Modalidade</label>
+            <div class="chip-select" id="modalidade-select">
+              <button type="button" class="chip-toggle" data-value="presencial">Presencial</button>
+              <button type="button" class="chip-toggle" data-value="EAD">EAD</button>
+              <button type="button" class="chip-toggle" data-value="hibrido">Híbrido</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Salvar perfil</button>
+          <a href="recomendacoes.html" class="btn btn-ghost">Ver recomendações</a>
+          <span class="save-feedback" id="save-feedback" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <span class="brand-mark small" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+      <p class="footer-tagline">Descubra onde você pode chegar e o caminho para chegar lá.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <a href="index.html#problema">O problema</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="perfil.html">Meu perfil</a>
+      <a href="recomendacoes.html">Recomendações</a>
+    </nav>
+  </div>
+  <div class="container">
+    <p class="footer-copy">© <span id="year"></span> Wuni. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="quiz-modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <h2>Teste vocacional</h2>
+        <p>Responda as perguntas abaixo com a opção que mais combina com você.</p>
+      </div>
+      <button type="button" class="modal-close" id="close-quiz" aria-label="Fechar">✕</button>
+    </div>
+
+    <div id="quiz-body"></div>
+    <div id="quiz-result" hidden></div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-primary" id="quiz-submit">Ver resultado</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+<script src="js/profile.js"></script>
+</body>
+</html>

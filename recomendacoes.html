@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recomendações — Wuni</title>
+<meta name="description" content="Veja e filtre as faculdades e cursos recomendados para o seu perfil no Wuni.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="index.html" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a href="index.html#problema">O problema</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="index.html#diferencial">Diferencial</a>
+      <a href="perfil.html">Meu perfil</a>
+      <a href="recomendacoes.html" class="is-active">Recomendações</a>
+      <a href="perfil.html" class="nav-cta">Editar perfil</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <p class="kicker">Recomendações</p>
+      <h1 id="page-title">Faculdades e cursos que combinam com você</h1>
+      <p id="page-subtitle">Baseado no perfil salvo neste navegador. Ajuste os filtros abaixo para explorar outras opções.</p>
+    </div>
+  </section>
+
+  <section class="app-shell">
+    <div class="container">
+
+      <div class="summary-strip" id="summary-strip"></div>
+
+      <p class="disclaimer-note">
+        Os dados de cursos, notas de corte, mensalidades e indicadores exibidos aqui são <strong>ilustrativos</strong>,
+        usados para demonstrar o funcionamento do Wuni — não representam informações oficiais atualizadas.
+      </p>
+
+      <div class="rec-layout">
+        <aside class="filter-panel">
+          <div class="filter-panel-head">
+            <h2>Filtros</h2>
+            <button type="button" class="btn btn-ghost btn-sm" id="clear-filters">Limpar</button>
+          </div>
+
+          <div class="filter-group">
+            <label for="search-input">Curso, instituição ou cidade</label>
+            <input type="text" id="search-input" placeholder="Ex: Administração, FGV, São Paulo...">
+          </div>
+
+          <hr class="filter-divider">
+
+          <div class="filter-group">
+            <label>Tipo de instituição</label>
+            <div class="chip-select" id="filter-tipo">
+              <button type="button" class="chip-toggle" data-value="publica">Pública</button>
+              <button type="button" class="chip-toggle" data-value="privada">Privada</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Modalidade</label>
+            <div class="chip-select" id="filter-modalidade">
+              <button type="button" class="chip-toggle" data-value="presencial">Presencial</button>
+              <button type="button" class="chip-toggle" data-value="EAD">EAD</button>
+              <button type="button" class="chip-toggle" data-value="hibrido">Híbrido</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Turnos ofertados</label>
+            <div class="chip-select" id="filter-turno">
+              <button type="button" class="chip-toggle" data-value="matutino">Matutino</button>
+              <button type="button" class="chip-toggle" data-value="vespertino">Vespertino</button>
+              <button type="button" class="chip-toggle" data-value="noturno">Noturno</button>
+              <button type="button" class="chip-toggle" data-value="integral">Integral</button>
+              <button type="button" class="chip-toggle" data-value="EAD">EAD</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Forma de ingresso</label>
+            <div class="chip-select" id="filter-ingresso">
+              <button type="button" class="chip-toggle" data-value="sisu">SiSU</button>
+              <button type="button" class="chip-toggle" data-value="vestibular_proprio">Vestibular próprio</button>
+              <button type="button" class="chip-toggle" data-value="enem_direto">ENEM (nota direta)</button>
+              <button type="button" class="chip-toggle" data-value="historico">Histórico/seriado</button>
+            </div>
+          </div>
+
+          <hr class="filter-divider">
+
+          <div class="filter-group">
+            <div class="range-field">
+              <div class="range-field-head">
+                <span>Mensalidade máxima</span>
+                <span id="mensalidade-value">R$ 10.000</span>
+              </div>
+              <input type="range" id="filter-mensalidade" min="0" max="10000" step="100" value="10000">
+              <span class="field-help" style="font-size:0.76rem;color:var(--ink-500);">Cursos gratuitos (públicos) sempre aparecem</span>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <div class="range-field">
+              <div class="range-field-head">
+                <span>Nota mínima de qualidade (MEC)</span>
+                <span id="mec-value">1</span>
+              </div>
+              <input type="range" id="filter-mec" min="1" max="5" step="0.5" value="1">
+            </div>
+          </div>
+
+          <hr class="filter-divider">
+
+          <div class="toggle-row" style="border-top:none;">
+            <div class="toggle-label" style="font-size:0.86rem;">Somente com bolsas disponíveis</div>
+            <label class="switch">
+              <input type="checkbox" id="filter-bolsas">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-label" style="font-size:0.86rem;">Somente cursos regulares no MEC</div>
+            <label class="switch">
+              <input type="checkbox" id="filter-regular">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </aside>
+
+        <div>
+          <div class="results-head">
+            <p class="results-count" id="results-count"></p>
+            <div class="results-sort">
+              <label for="sort-select">Ordenar por</label>
+              <select id="sort-select">
+                <option value="fit">Fit Score (recomendado)</option>
+                <option value="mensalidade">Menor mensalidade</option>
+                <option value="mec">Maior nota MEC</option>
+                <option value="evasao">Menor taxa de evasão</option>
+                <option value="salario">Maior salário de egressos</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="rec-grid" id="rec-grid"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <span class="brand-mark small" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+      <p class="footer-tagline">Descubra onde você pode chegar e o caminho para chegar lá.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <a href="index.html#problema">O problema</a>
+      <a href="index.html#como-funciona">Como funciona</a>
+      <a href="perfil.html">Meu perfil</a>
+      <a href="recomendacoes.html">Recomendações</a>
+    </nav>
+  </div>
+  <div class="container">
+    <p class="footer-copy">© <span id="year"></span> Wuni. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+<script src="js/recommendations.js"></script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wuni — Descubra onde você pode chegar</title>
+<meta name="description" content="Wuni é a plataforma de orientação universitária que cruza seu perfil acadêmico, financeiro e pessoal para recomendar os cursos e faculdades certos para você — e o caminho para chegar até eles.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <a href="#top" class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+    </a>
+
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a href="#problema">O problema</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#diferencial">Diferencial</a>
+      <a href="perfil.html">Meu perfil</a>
+      <a href="recomendacoes.html">Recomendações</a>
+      <a href="perfil.html" class="nav-cta">Criar meu perfil</a>
+    </nav>
+
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Orientação universitária baseada em dados</p>
+        <h1>Descubra onde você pode chegar <span class="accent">e o caminho para chegar lá.</span></h1>
+        <p class="hero-lead">
+          O <strong>Wuni</strong> cruza seu desempenho acadêmico, seus objetivos, sua localização
+          e suas condições financeiras para responder a pergunta que nenhum ranking responde:
+          quais faculdades realmente fazem sentido para você — e como chegar até elas.
+        </p>
+        <div class="hero-actions">
+          <a href="perfil.html" class="btn btn-primary">Criar meu perfil</a>
+          <a href="recomendacoes.html" class="btn btn-ghost">Ver recomendações</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" aria-hidden="true">
+        <div class="fit-card">
+          <div class="fit-card-header">
+            <span class="fit-tag">Fit Score</span>
+            <span class="fit-score">87<span>/100</span></span>
+          </div>
+          <p class="fit-institution">FGV — Administração</p>
+          <ul class="fit-bars">
+            <li><span>Compatibilidade acadêmica</span><i style="--v:91%"></i><b>91</b></li>
+            <li><span>Qualidade</span><i style="--v:95%"></i><b>95</b></li>
+            <li><span>Custo</span><i style="--v:72%"></i><b>72</b></li>
+            <li><span>Localização</span><i style="--v:90%"></i><b>90</b></li>
+            <li><span>Compatibilidade de ingresso</span><i style="--v:84%"></i><b>84</b></li>
+          </ul>
+        </div>
+        <div class="floating-chip chip-green">🟢 Alta chance — Mackenzie</div>
+        <div class="floating-chip chip-yellow">🟡 Chance média — Insper</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERGUNTA CENTRAL -->
+  <section class="quote-strip reveal">
+    <div class="container">
+      <blockquote>
+        “Dado quem eu sou, minhas notas, minhas preferências e minhas condições financeiras,
+        quais são as melhores opções para mim e qual é o caminho para chegar até elas?”
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- O PROBLEMA -->
+  <section class="section" id="problema">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">O problema</p>
+        <h2>Escolher uma faculdade hoje exige garimpar dezenas de fontes diferentes</h2>
+        <p class="section-lead">
+          O aluno precisa descobrir sozinho quais instituições oferecem o curso certo, quais processos
+          seletivos utilizam, notas de corte, vagas, mensalidades, bolsas, qualidade, localização e prazos —
+          e depois ainda interpretar tudo isso e decidir por conta própria.
+        </p>
+      </div>
+
+      <div class="chip-grid reveal">
+        <span>Instituições e cursos</span>
+        <span>SISU, ENEM ou vestibular próprio</span>
+        <span>Notas de corte</span>
+        <span>Número de vagas</span>
+        <span>Campus e turno</span>
+        <span>Mensalidades</span>
+        <span>Bolsas e financiamentos</span>
+        <span>Qualidade da instituição</span>
+        <span>Localização</span>
+        <span>Datas de inscrição</span>
+        <span>Dificuldade de ingresso</span>
+      </div>
+
+      <p class="callout reveal">
+        Isso faz com que muitos estudantes escolham instituições com base principalmente em
+        <strong>reputação, proximidade ou opinião de terceiros</strong> — sem considerar qual opção
+        oferece o melhor equilíbrio entre seus objetivos, sua capacidade acadêmica e suas condições financeiras.
+      </p>
+    </div>
+  </section>
+
+  <!-- A SOLUÇÃO -->
+  <section class="section section-alt" id="solucao">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">A solução</p>
+        <h2>Uma recomendação personalizada, baseada em dados oficiais</h2>
+        <p class="section-lead">
+          Em vez de apresentar mais uma lista de faculdades, o Wuni cruza informações do seu
+          perfil com dados públicos e oficiais para indicar o caminho mais realista até o seu objetivo.
+        </p>
+      </div>
+
+      <div class="feature-grid reveal">
+        <div class="feature-card">
+          <h3>Desempenho acadêmico</h3>
+          <p>Notas escolares, desempenho por disciplina e resultado no ENEM, quando disponível.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Interesses e objetivos</h3>
+          <p>Curso desejado, cursos alternativos e a prioridade entre eles.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Localização</h3>
+          <p>Cidade, estado e disponibilidade real para mudar de região.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Orçamento</h3>
+          <p>Limite de mensalidade, bolsas, ProUni e FIES.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Tipo e modalidade</h3>
+          <p>Pública, privada, presencial, EAD, híbrido, período e turno.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Forma de ingresso</h3>
+          <p>SISU, ENEM ou vestibular próprio — e as notas de corte históricas de cada um.</p>
+        </div>
+      </div>
+
+      <div class="source-note reveal">
+        <p><strong>Princípio fundamental:</strong> o Wuni prioriza dados oficiais e rastreáveis — e-MEC,
+        INEP, SISU, ENADE/CPC/IGC. Quando não houver fonte pública padronizada, a informação é sinalizada como
+        tal e passa por curadoria.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section" id="como-funciona">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Motor de recomendação</p>
+        <h2>Como o Wuni chega até a sua lista de opções</h2>
+      </div>
+
+      <ol class="steps reveal">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>Filtro</h3>
+            <p>O sistema elimina opções incompatíveis com curso, localização, modalidade, tipo de instituição e orçamento.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>Compatibilidade acadêmica</h3>
+            <p>Compara o desempenho do aluno com os requisitos e históricos disponíveis de cada instituição.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>Análise da instituição</h3>
+            <p>Considera qualidade, desempenho histórico, localização, custo e forma de ingresso.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div>
+            <h3>Fit Score</h3>
+            <p>Cada instituição recebe uma pontuação de compatibilidade com aquele aluno específico — com pesos que podem ser personalizados.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="user-journey reveal">
+        <div><span>1</span>O aluno informa quem é</div>
+        <div><span>2</span>Escolhe o que quer estudar</div>
+        <div><span>3</span>Define suas condições</div>
+        <div><span>4</span>O Wuni analisa os dados</div>
+        <div><span>5</span>Recebe suas melhores opções</div>
+      </div>
+
+      <p class="callout reveal">
+        “Encontramos opções compatíveis com o seu perfil.”
+        <span class="callout-sub">Classificadas em faculdades dos sonhos 🎯, faculdades-alvo ⭐ e opções seguras ✅</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- FUNCIONALIDADES -->
+  <section class="section section-alt" id="funcionalidades">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Funcionalidades</p>
+        <h2>Da recomendação a uma estratégia concreta de aprovação</h2>
+      </div>
+
+      <div class="showcase reveal">
+        <article class="showcase-card">
+          <h3>Chance de aprovação</h3>
+          <p>Sem falsas precisões como “83% de chance”. O Wuni usa categorias baseadas em dados
+          históricos, notas de corte e concorrência.</p>
+          <div class="chance-tags">
+            <span class="tag tag-green">🟢 Alta chance</span>
+            <span class="tag tag-yellow">🟡 Chance intermediária</span>
+            <span class="tag tag-red">🔴 Baixa chance</span>
+          </div>
+          <p class="fine-print">A classificação é uma estimativa baseada em dados históricos e não representa garantia de aprovação.</p>
+        </article>
+
+        <article class="showcase-card">
+          <h3>Plano A, B e C</h3>
+          <p>A recomendação vira estratégia: uma opção sonho, uma opção alvo e uma opção segura para o mesmo objetivo.</p>
+          <ul class="plan-list">
+            <li><strong>🎯 Plano A — Sonho:</strong> FGV, Administração <em>· 🔴 baixa</em></li>
+            <li><strong>⭐ Plano B — Alvo:</strong> Insper, Administração <em>· 🟡 média</em></li>
+            <li><strong>✅ Plano C — Segurança:</strong> Mackenzie, Administração <em>· 🟢 alta</em></li>
+          </ul>
+        </article>
+
+        <article class="showcase-card">
+          <h3>Comparador</h3>
+          <p>Compare duas ou mais instituições lado a lado, num único lugar.</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Critério</th><th>A</th><th>B</th><th>C</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Fit Score</td><td>91</td><td>87</td><td>82</td></tr>
+                <tr><td>Chance</td><td>🟢</td><td>🟡</td><td>🟢</td></tr>
+                <tr><td>Qualidade</td><td>94</td><td>91</td><td>86</td></tr>
+                <tr><td>Ingresso</td><td>ENEM</td><td>Vestibular</td><td>ENEM</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="showcase-card">
+          <h3>Simulador financeiro</h3>
+          <p>Estimativa do custo real da graduação, considerando bolsa, ProUni, FIES e descontos.</p>
+          <div class="sim-box">
+            <div><span>Mensalidade</span><b>R$ 5.000</b></div>
+            <div><span>Bolsa</span><b>30%</b></div>
+            <div><span>Mensalidade estimada</span><b>R$ 3.500</b></div>
+            <div><span>Orçamento do aluno</span><b>R$ 4.000</b></div>
+          </div>
+          <p class="sim-result">Dentro do orçamento ✅</p>
+        </article>
+
+        <article class="showcase-card">
+          <h3>Calendário inteligente</h3>
+          <p>Não é um calendário genérico de vestibulares — é o calendário do seu processo seletivo.</p>
+          <ul class="calendar-list">
+            <li><time>15/09</time>Inscrição FGV</li>
+            <li><time>20/09</time>Inscrição Mackenzie</li>
+            <li><time>05/10</time>FUVEST</li>
+            <li><time>12/10</time>ENEM</li>
+          </ul>
+        </article>
+
+        <article class="showcase-card">
+          <h3>Plano de preparação</h3>
+          <p>Conecta a faculdade escolhida com um plano de estudos que evolui junto com o desempenho do aluno.</p>
+          <ul class="prep-list">
+            <li><strong>Semana 1:</strong> Matemática (funções), 2 redações, 1 simulado</li>
+            <li><strong>Semana 2:</strong> Matemática (estatística), Português, 1 simulado</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAL -->
+  <section class="section" id="diferencial">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Diferencial</p>
+        <h2>O Wuni não é um ranking, nem um catálogo de faculdades</h2>
+        <p class="section-lead">É a camada de decisão que conecta aluno, curso, faculdade, chance, custo, localização, forma de ingresso e estratégia.</p>
+      </div>
+
+      <div class="compare-grid reveal">
+        <div class="compare-card">
+          <h4>Google</h4>
+          <p>“Aqui estão as faculdades.”</p>
+        </div>
+        <div class="compare-card">
+          <h4>Ranking</h4>
+          <p>“Estas são as melhores faculdades.”</p>
+        </div>
+        <div class="compare-card">
+          <h4>Site de vestibular</h4>
+          <p>“Esta foi a nota de corte.”</p>
+        </div>
+        <div class="compare-card compare-highlight">
+          <h4>Wuni</h4>
+          <p>“Conhecendo seu perfil, estas são as opções que mais fazem sentido para você — e este é o caminho para chegar até elas.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PÚBLICO -->
+  <section class="section section-alt" id="publico">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="kicker">Para quem é</p>
+        <h2>Feito para quem está decidindo o próximo passo</h2>
+      </div>
+      <div class="audience-grid reveal">
+        <div class="audience-card">
+          <h3>Público principal</h3>
+          <ul>
+            <li>Alunos do 2º e 3º ano do ensino médio</li>
+            <li>Vestibulandos</li>
+            <li>Quem ainda não decidiu onde estudar</li>
+            <li>Quem já sabe o curso, mas não sabe a instituição</li>
+          </ul>
+        </div>
+        <div class="audience-card">
+          <h3>Público secundário</h3>
+          <ul>
+            <li>Pais e responsáveis</li>
+            <li>Escolas</li>
+            <li>Cursinhos pré-vestibulares</li>
+            <li>Orientadores educacionais</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="section cta-section" id="comece-agora">
+    <div class="container cta-inner reveal">
+      <h2>Comece agora a montar sua estratégia</h2>
+      <p>Preencha seu perfil em poucos minutos — ou faça o teste vocacional se ainda não sabe o que quer cursar — e veja suas recomendações personalizadas na hora.</p>
+      <div class="hero-actions" style="justify-content: center;">
+        <a href="perfil.html" class="btn btn-primary">Criar meu perfil</a>
+        <a href="recomendacoes.html" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,0.3);">Ver recomendações</a>
+      </div>
+      <p class="fine-print" style="margin-top:18px;">Seus dados ficam salvos apenas no seu navegador.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <span class="brand-mark small" aria-hidden="true"><svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><path d="M22 3L41 22L22 41L3 22L22 3Z" fill="currentColor"/><path d="M25 27C28 30 30 33 31 37" stroke="#2c4fd8" stroke-width="2.5" stroke-linecap="round" fill="none"/><circle cx="32" cy="38.5" r="3" fill="#2c4fd8"/></svg></span>
+      <span class="brand-name">Wuni</span>
+      <p class="footer-tagline">Descubra onde você pode chegar e o caminho para chegar lá.</p>
+    </div>
+    <nav class="footer-nav" aria-label="Links do rodapé">
+      <a href="#problema">O problema</a>
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#diferencial">Diferencial</a>
+      <a href="perfil.html">Meu perfil</a>
+      <a href="recomendacoes.html">Recomendações</a>
+    </nav>
+  </div>
+  <div class="container">
+    <p class="footer-copy">© <span id="year"></span> Wuni. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
