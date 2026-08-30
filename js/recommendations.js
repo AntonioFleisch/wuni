@@ -167,7 +167,7 @@ function readFilters() {
   };
 }
 
-function courseMatchesFilters(course, filters) {
+function courseMatchesFilters(course, filters, profile) {
   if (filters.search) {
     const haystack = `${course.curso} ${course.instituicao} ${course.cidade}`.toLowerCase();
     if (!haystack.includes(filters.search)) return false;
@@ -180,6 +180,13 @@ function courseMatchesFilters(course, filters) {
   if (course.notaMEC < filters.mecMin) return false;
   if (filters.somenteBolsas && !course.bolsas) return false;
   if (filters.somenteRegular && course.situacaoMEC !== "regular") return false;
+
+  const interesses = profile.interesses || [];
+  if (interesses.length && !interesses.includes(course.curso)) return false;
+
+  const cidadesAceita = profile.cidadesAceita || [];
+  if (!profile.aceitaMorarFora && cidadesAceita.length && !cidadesAceita.includes(course.cidade)) return false;
+
   return true;
 }
 
@@ -238,7 +245,7 @@ function renderResults() {
     filters.mensalidadeMax >= 10000 ? "Sem limite" : formatMoney(filters.mensalidadeMax);
   document.getElementById("mec-value").textContent = filters.mecMin.toFixed(1);
 
-  const filtered = sortCourses(COURSES.filter((c) => courseMatchesFilters(c, filters)), filters.sort, profile);
+  const filtered = sortCourses(COURSES.filter((c) => courseMatchesFilters(c, filters, profile)), filters.sort, profile);
 
   document.getElementById("results-count").innerHTML = `<strong>${filtered.length}</strong> opções encontradas`;
   renderSummary(filtered, profile);
