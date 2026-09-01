@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, implementação da 101 sobre o commit
-> `618ab83`.
+> **Última verificação:** 2026-09-01, revisão da 101 sobre o commit
+> `e89a482`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -16,8 +16,8 @@ somente a página inicial padrão gerada pelo `create-next-app`.
 
 O motor de recomendação já está portado para TypeScript puro em
 `lib/recommendation/`, com Fit Score, chance, filtros, restrição factual de
-localização, ordenação e partição por fit cobertos por testes unitários. Ainda
-não há página Next consumindo esse motor.
+localização, ordenação e partição por fit cobertos por 36 testes unitários
+(`6f65c1f`). Ainda não há página Next consumindo esse motor.
 
 Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
@@ -27,8 +27,25 @@ Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
 `5ade79e`, `ac0a8d6`, `0ba413c`).
 
-Próximo passo: revisar a implementação da **101**. A spec permanece em
-`docs/tasks/` até a revisão passar; nenhuma tarefa posterior está especificada.
+A **101 foi revisada e aprovada com uma reprovação**: pesos, limiares,
+isolamento do motor, testes e portões conferidos rodando; só
+`partitionByFit` divergiu.
+
+**Correção pendente, e é a única coisa que falta para fechar a 101.**
+`lib/recommendation/recommend.ts` corta a lista por proporção do maior fit
+(`ratio = 0.5`), enquanto a spec vigente pede **distância em pontos**
+(`limiar = maiorFit - distanciaMaxima`, padrão 15). Com proporção, a seção
+colapsável nasce sempre vazia: medido contra os 16 cursos mockados, o Fit
+Score varia entre 64 e 93, e metade do maior nunca alcança o piso. Assinatura,
+corpo e testes de partição precisam mudar, inclusive o teste que hoje passa
+`0.5` explícito.
+
+A divergência não é erro de execução: a spec foi alterada em `618ab83`,
+depois de o Codex começar. Ver _Spec entregue não se edita em silêncio_, no
+`AGENTS.md`.
+
+Próximo passo: essa correção, nova revisão, e só então a 101 é fechada e a
+spec apagada. Nenhuma tarefa posterior está especificada.
 
 ### Estratégia de migração — decidida
 
