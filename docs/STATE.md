@@ -3,7 +3,7 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-08-31, contra o commit `d59fac4`.
+> **Última verificação:** 2026-08-31, contra o commit `e8e1327`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver *Manutenção* no `AGENTS.md`.
 

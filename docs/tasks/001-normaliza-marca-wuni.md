@@ -51,7 +51,7 @@ estão corretos.
 
 ## Passos
 
-Os números de linha abaixo valem para o commit `d59fac4`. Confira o conteúdo
+Os números de linha abaixo valem para o commit `e8e1327`. Confira o conteúdo
 da linha antes de editar; se não bater, localize a ocorrência pelo texto.
 
 ### Passo 1 — a chave de tema (linha 16), que NÃO segue a mesma regra das outras
