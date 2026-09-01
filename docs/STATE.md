@@ -31,21 +31,21 @@ backend próprio nem autenticação.
 Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
 `5ade79e`, `ac0a8d6`, `0ba413c`), **101** (motor de recomendação em
-TypeScript puro — `6f65c1f`, mais a correção da partição).
+TypeScript puro — `6f65c1f`, mais a correção da partição), **102**
+(mensalidade como faixa, saída do salário de egressos e `budgetFit` contínuo
+— `35ec681` a `fbdc3ab`).
 
 A partição da lista corta por **distância em pontos do maior fit**, padrão
 15, e não por proporção: o Fit Score varia entre 64 e 93 contra a base atual,
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Aguardando revisão: **102** — mensalidade como faixa com estado desconhecido,
-saída do salário médio de egressos e correção da descontinuidade do
-`budgetFit` (`35ec681` a `7e65d1d`).
-
-Depois da aprovação, a **103** cria `db/` e `server/`, a regra de zonas de
-import no ESLint, o _seed_ dos cursos já convertido para faixa,
-`listarCursos()` em memória e o parser do perfil vindo do `localStorage`. É a
-spec que faz a estrutura de pastas do `AGENTS.md` existir de verdade.
+Próxima tarefa: **103**, ainda não especificada. Ela cria `db/` e `server/`,
+a regra de zonas de import no ESLint, o _seed_ dos cursos já convertido para
+faixa, `listarCursos()` em memória e o parser do perfil vindo do
+`localStorage`. É a spec que faz a estrutura de pastas do `AGENTS.md` existir
+de verdade. Leva junto o buraco do portão de lint descrito em _Verificação
+disponível_.
 
 ### Estratégia de migração — decidida
 
@@ -132,6 +132,14 @@ continua a cargo da revisão; a 101 não renderiza interface.
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
 no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são
 módulos, e serão removidos ao fim do porte.
+
+**Buraco no portão de lint.** O `AGENTS.md` descreve o portão como "ESLint
+zero erros, Prettier aplicado", mas `npm run lint` roda só o ESLint — e o
+`eslint-config-prettier` apenas desliga regras conflitantes, não formata nem
+verifica formatação. Na prática, nada verifica Prettier hoje:
+`lib/recommendation/score.ts` está em `main` fora do formato e passou nos
+quatro portões. Descoberto na revisão da 102, em 2026-09-01. A 103 fecha o
+buraco e formata o arquivo. Até lá, o portão promete mais do que cumpre.
 
 ## Restrição do código atual
 

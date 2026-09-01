@@ -236,6 +236,20 @@ interesse no curso 30%, orçamento 15%, nota MEC 15%, compatibilidade acadêmica
 percentual é deliberada — o produto evita falsa precisão do tipo "83% de
 chance". Mantenha a postura, inclusive no texto da interface.
 
+`budgetFit` compara orçamento com **faixa de mensalidade**, que tem três
+estados: gratuito é `{ min: 0, max: 0 }`, faixa conhecida é `{ min, max }`, e
+desconhecido é `null`. **`null` nunca vira zero** — preço ausente preenchido
+com zero transforma instituição privada em "gratuita" na tela, e é o erro
+mais caro que este modelo produz.
+
+A faixa é avaliada pelo pior caso que ainda cabe: inteira dentro do orçamento
+usa o teto, inteira acima usa o piso, e faixa que cruza o orçamento vale 0,7,
+a fronteira exata entre os dois ramos. Desconhecido vale 0,6, o mesmo que
+`courseMatch` usa para "não declarou interesse": falta de informação não
+premia nem pune. A função é contínua e decrescente — foi assim que a
+descontinuidade que premiava o curso mais caro foi corrigida, na 102. Não a
+reintroduza "restaurando" a aritmética do legado.
+
 `enemMedia` soma as cinco notas tratando ausente como zero e **divide sempre
 por cinco**. Nota faltando puxa a média para baixo em vez de ser ignorada.
 É deliberado e foi preservado no porte; parece defeito e não é. Mudar isso é
@@ -279,12 +293,10 @@ acima é sobre o perfil, não sobre os controles da interface.
 
 - Bloco de design tokens e os dois blocos de tema escuro do CSS
 - Copy, headline e posicionamento de marca em `index.html`
-- Pesos do `calculateFit` e limiares do `calculateChance`. Uma exceção
-  autorizada pelo mantenedor em 2026-09-01, e só ela: tornar `budgetFit`
-  contínuo na fronteira do orçamento, multiplicando o ramo de acima do
-  orçamento por 0,7. Hoje a função salta de 0,70 para ~0,95 quando a
-  mensalidade passa do orçamento, premiando o curso mais caro. Os sete pesos
-  seguem intocados
+- Pesos do `calculateFit` e limiares do `calculateChance`. A única exceção já
+  foi consumida: o mantenedor autorizou, em 2026-09-01, tornar `budgetFit`
+  contínuo, o que a 102 aplicou. A forma atual está descrita em *Motor de
+  recomendação* e vale como referência — os sete pesos seguem intocados
 - Introdução de dependências ou etapa de build fora de um plano aprovado.
   O Codex tem acesso a rede e **consegue** rodar `npm install` — isto é regra,
   não impedimento técnico
