@@ -31,6 +31,35 @@ pais, escolas e cursinhos.
 
 Estágio: MVP mínimo, prestes a ser reescrito.
 
+### Escopo previsto
+
+O que o produto vai ter, e onde cada parte mora na estrutura descrita em
+*Arquitetura alvo*. É o escopo, não a ordem de entrega — o que vem primeiro é
+decisão do mantenedor e vive no `STATE.md`. O que **já existe** também está
+lá; várias linhas abaixo são maquete estática hoje.
+
+| Capacidade | Mora em |
+| --- | --- |
+| Motor de recomendação: Fit Score, chance, filtros, ordenação, partição | `lib/recommendation/` |
+| Perfil do aluno: tipos, normalização, importação do `localStorage` | `lib/perfil/`, `server/`, `db/` |
+| Teste vocacional (quiz por área) | `lib/`, `app/perfil/` |
+| Base de cursos e instituições, com *seed* | `db/` |
+| Contas, login e sessão | `server/`, `app/api/` |
+| Landing institucional | `app/` |
+| Tela de perfil e tela de recomendações | `app/`, `components/` |
+| Comparador de cursos | `lib/`, `app/` |
+| Simulador financeiro | `lib/`, `app/` |
+| Plano A/B/C (sonho, alvo, seguro) | `lib/recommendation/`, `app/` |
+| Calendário de processos seletivos e plano de preparação | a definir |
+
+As duas últimas linhas são as mais frágeis: prometem dado que o produto não
+tem — datas oficiais de vestibular e trilha de estudo. Não as trate como
+escopo confirmado sem o mantenedor dizer de onde vem o dado.
+
+Regra que atravessa todas: **cálculo é `lib/`, tela é `app/`.** Comparador,
+simulador e Plano A/B/C são regra de negócio com uma interface por cima, não
+componentes que fazem conta.
+
 ## Arquitetura alvo — em construção
 
 - **Framework:** Next.js (App Router) + TypeScript em modo `strict`
@@ -56,6 +85,52 @@ nada de `fetch`, nada de import de componente ou de ORM.
 produz recomendação errada sem ninguém perceber. Isolada, é testável em
 milissegundos sem navegador e sem banco. **Nenhum plano deve acoplar o motor
 a framework, ORM ou DOM.**
+
+### Estrutura de pastas — proposta, pendente de confirmação
+
+O mantenedor decidiu em 2026-09-01 separar frontend, backend e banco por
+pasta. Como o Next é fullstack e o deploy é um único aplicativo na Vercel,
+a separação é **por camada na raiz**, não por três projetos irmãos:
+
+```text
+app/            frontend: rotas, layouts, páginas
+  api/          borda HTTP do backend (route handlers)
+components/     UI reutilizável, sem regra de negócio
+lib/            domínio puro: sem React, sem banco, sem rede
+server/         backend: casos de uso, sessão, autorização
+db/             banco: schema, migrations, seed, queries
+public/         assets estáticos
+docs/           contexto e planos
+```
+
+Isto **não reabre** a decisão descartada do `src/`: tudo continua na raiz.
+
+**A separação real é a direção de dependência**, e ela é de mão única:
+
+```text
+app/ → server/ → db/ → lib/        e  app/ → components/ → lib/
+```
+
+- `lib/` não importa nada do projeto. É o núcleo testável em milissegundos,
+  e `lib/recommendation/` é o caso mais rígido dele (ver acima).
+- `db/` é o único lugar onde o ORM aparece. Query fora daqui é defeito.
+- `server/` é o único que fala com `db/`. Página que consulta o banco direto
+  não existe; ela chama um caso de uso.
+- `app/` e `components/` nunca importam de `db/`. Componente de cliente
+  recebe dado serializável, nunca modelo do ORM.
+- Nada em `lib/`, `db/` ou `server/` importa de `app/` ou `components/`.
+
+Duas exigências para a regra não virar decoração:
+
+1. Todo arquivo de `server/` e de `db/` começa com o marcador de código
+   exclusivo de servidor do Next, para que importá-lo de um componente de
+   cliente quebre o build em vez de vazar em silêncio.
+2. A direção de dependência vira regra de ESLint com zonas de importação
+   restritas, e passa a ser verificada pelo portão de lint. Enquanto não
+   existir, é convenção — e convenção não segura agente nenhum.
+
+Não existe pasta `utils/`. Código sem dono vai para o módulo do domínio a que
+serve.
 
 ### Escolhas de implementação — proposta, pendente de revisão
 
