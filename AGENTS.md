@@ -176,6 +176,13 @@ que falta se escreve neles — não se resolve mantendo sessão viva.
 - **Resete agora** se um agente citar caminho ou comando que não existe,
   reabrir decisão já registrada aqui, ou precisar da mesma correção duas
   vezes.
+- **Ao fechar um ciclo, o Claude Code reescreve `docs/BRIEFING.md`** — a
+  orientação de partida da sessão seguinte. Arquivo **único e sobrescrito**,
+  nunca acumulado: é handoff, não histórico, e é por isso que não vira o
+  arquivo de log que a seção *Decisões descartadas* recusa. Curto. Diz onde
+  paramos, o que está travado, o que fazer primeiro e por quê — não repete
+  fato que já está no `STATE.md`. Em qualquer contradição, `AGENTS.md` e
+  `STATE.md` vencem.
 - O Codex roda com `memories = true` no `~/.codex/config.toml`, então
   persiste memória por um canal fora destes documentos e fora da nossa
   revisão. Se ele agir com base em algo que não está escrito aqui, é o
