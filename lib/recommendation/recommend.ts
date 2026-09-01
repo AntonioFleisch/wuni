@@ -2,8 +2,7 @@ import { atendeRestricoes } from "./filters";
 import { calculateChance, calculateFit } from "./score";
 import type { Curso, Perfil, Recomendacao } from "./types";
 
-export type CriterioOrdem =
-  "fit" | "mensalidade" | "mec" | "evasao" | "salario";
+export type CriterioOrdem = "fit" | "mensalidade" | "mec" | "evasao";
 
 export function recommend(cursos: Curso[], perfil: Perfil): Recomendacao[] {
   return cursos
@@ -25,16 +24,19 @@ export function sortRecommendations(
 
     switch (criterio) {
       case "mensalidade":
-        diferenca = a.curso.mensalidade - b.curso.mensalidade;
+        if (a.curso.mensalidade === null) {
+          diferenca = b.curso.mensalidade === null ? 0 : 1;
+        } else if (b.curso.mensalidade === null) {
+          diferenca = -1;
+        } else {
+          diferenca = a.curso.mensalidade.min - b.curso.mensalidade.min;
+        }
         break;
       case "mec":
         diferenca = b.curso.notaMEC - a.curso.notaMEC;
         break;
       case "evasao":
         diferenca = a.curso.taxaEvasao - b.curso.taxaEvasao;
-        break;
-      case "salario":
-        diferenca = b.curso.salarioMedioEgressos - a.curso.salarioMedioEgressos;
         break;
       case "fit":
         diferenca = b.fit - a.fit;
