@@ -168,10 +168,10 @@ describe("partitionByFit", () => {
   });
 
   it("calcula o maior fit sem assumir ordem e inclui empate no limiar", () => {
-    const baixa = buildRecomendacao("baixa", 49);
-    const limiarA = buildRecomendacao("limiar-a", 50);
+    const baixa = buildRecomendacao("baixa", 84);
+    const limiarA = buildRecomendacao("limiar-a", 85);
     const maior = buildRecomendacao("maior", 100);
-    const limiarB = buildRecomendacao("limiar-b", 50);
+    const limiarB = buildRecomendacao("limiar-b", 85);
 
     expect(partitionByFit([baixa, limiarA, maior, limiarB])).toEqual({
       principais: [limiarA, maior, limiarB],
@@ -179,11 +179,21 @@ describe("partitionByFit", () => {
     });
   });
 
-  it("aceita um ratio explícito", () => {
-    const maior = buildRecomendacao("maior", 80);
-    const intermediaria = buildRecomendacao("intermediaria", 50);
+  it("aceita todos os itens dentro da distância", () => {
+    const menor = buildRecomendacao("menor", 75);
+    const maior = buildRecomendacao("maior", 90);
 
-    expect(partitionByFit([maior, intermediaria], 0.75)).toEqual({
+    expect(partitionByFit([menor, maior])).toEqual({
+      principais: [menor, maior],
+      secundarias: [],
+    });
+  });
+
+  it("aceita uma distância máxima explícita", () => {
+    const maior = buildRecomendacao("maior", 80);
+    const intermediaria = buildRecomendacao("intermediaria", 74);
+
+    expect(partitionByFit([maior, intermediaria], 5)).toEqual({
       principais: [maior],
       secundarias: [intermediaria],
     });

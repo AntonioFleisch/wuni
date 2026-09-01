@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, revisão da 101 sobre o commit
-> `e89a482`.
+> **Última verificação:** 2026-09-01, fechamento da 101 sobre o commit
+> `a872eb4`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -16,8 +16,8 @@ somente a página inicial padrão gerada pelo `create-next-app`.
 
 O motor de recomendação já está portado para TypeScript puro em
 `lib/recommendation/`, com Fit Score, chance, filtros, restrição factual de
-localização, ordenação e partição por fit cobertos por 36 testes unitários
-(`6f65c1f`). Ainda não há página Next consumindo esse motor.
+localização, ordenação e partição por fit cobertos por 37 testes unitários.
+Ainda não há página Next consumindo esse motor.
 
 Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
@@ -25,27 +25,22 @@ backend próprio nem autenticação.
 
 Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
-`5ade79e`, `ac0a8d6`, `0ba413c`).
+`5ade79e`, `ac0a8d6`, `0ba413c`), **101** (motor de recomendação em
+TypeScript puro — `6f65c1f`, mais a correção da partição).
 
-A **101 foi revisada e aprovada com uma reprovação**: pesos, limiares,
-isolamento do motor, testes e portões conferidos rodando; só
-`partitionByFit` divergiu.
+A partição da lista corta por **distância em pontos do maior fit**, padrão
+15, e não por proporção: o Fit Score varia entre 64 e 93 contra a base atual,
+então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
+colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-**Correção pendente, e é a única coisa que falta para fechar a 101.**
-`lib/recommendation/recommend.ts` corta a lista por proporção do maior fit
-(`ratio = 0.5`), enquanto a spec vigente pede **distância em pontos**
-(`limiar = maiorFit - distanciaMaxima`, padrão 15). Com proporção, a seção
-colapsável nasce sempre vazia: medido contra os 16 cursos mockados, o Fit
-Score varia entre 64 e 93, e metade do maior nunca alcança o piso. Assinatura,
-corpo e testes de partição precisam mudar, inclusive o teste que hoje passa
-`0.5` explícito.
+Próxima tarefa: **102** — mensalidade como faixa com estado desconhecido,
+saída do salário médio de egressos e correção da descontinuidade do
+`budgetFit`, especificada em `docs/tasks/`. Só `lib/recommendation/`.
 
-A divergência não é erro de execução: a spec foi alterada em `618ab83`,
-depois de o Codex começar. Ver _Spec entregue não se edita em silêncio_, no
-`AGENTS.md`.
-
-Próximo passo: essa correção, nova revisão, e só então a 101 é fechada e a
-spec apagada. Nenhuma tarefa posterior está especificada.
+Depois dela, a **103** cria `db/` e `server/`, a regra de zonas de import no
+ESLint, o _seed_ dos cursos já convertido para faixa, `listarCursos()` em
+memória e o parser do perfil vindo do `localStorage`. É a spec que faz a
+estrutura de pastas do `AGENTS.md` existir de verdade.
 
 ### Estratégia de migração — decidida
 
@@ -181,7 +176,14 @@ Permanecem no legado ou precisam ser resolvidos na migração:
    `AGENTS.md`. A 101 corrigiu o código novo: interesse pesa no Fit Score e
    não filtra. O legado continua com o defeito até ser removido, e não deve
    ser corrigido lá.
-2. `wireChipToggle` é chamado dentro de `buildChipSelect` e também
+2. **`budgetFit` é descontínuo, e a favor do mais caro.** Com orçamento de
+   10.000, mensalidade 10.000 pontua 0,70 e mensalidade 10.500 pontua 0,95:
+   os dois ramos da função não se encontram, e estourar o orçamento em 5%
+   vale mais do que caber nele. São 4,5 pontos de Fit Score, já que orçamento
+   pesa 15%. Encontrado na revisão da 101, em 2026-09-01. O mantenedor
+   autorizou a correção no código novo — ver _Limites_, no `AGENTS.md` —, e
+   ela está especificada na 102. O legado morre com o defeito.
+3. `wireChipToggle` é chamado dentro de `buildChipSelect` e também
    diretamente em `js/profile.js`. Nos usos atuais os caminhos não se cruzam,
    mas um container que passe pelos dois ganha listeners duplicados e o
    toggle se anula.

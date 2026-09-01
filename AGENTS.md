@@ -236,6 +236,17 @@ interesse no curso 30%, orçamento 15%, nota MEC 15%, compatibilidade acadêmica
 percentual é deliberada — o produto evita falsa precisão do tipo "83% de
 chance". Mantenha a postura, inclusive no texto da interface.
 
+`enemMedia` soma as cinco notas tratando ausente como zero e **divide sempre
+por cinco**. Nota faltando puxa a média para baixo em vez de ser ignorada.
+É deliberado e foi preservado no porte; parece defeito e não é. Mudar isso é
+decisão de produto, nunca limpeza de código.
+
+O `Perfil` que o motor consome é um **recorte**: só os campos que pontuam, e
+todos obrigatórios. Quem lida com dado incompleto é a fronteira que carrega o
+perfil — do `localStorage` hoje, do banco depois. O motor não se defende de
+`undefined`, e não deve começar a: defesa espalhada esconde de onde vem o
+dado sujo.
+
 ### Perfil pesa, não corta
 
 Decidido em 2026-09-01. Vale para o motor e para toda tela que o consuma.
@@ -268,7 +279,12 @@ acima é sobre o perfil, não sobre os controles da interface.
 
 - Bloco de design tokens e os dois blocos de tema escuro do CSS
 - Copy, headline e posicionamento de marca em `index.html`
-- Pesos do `calculateFit` e limiares do `calculateChance`
+- Pesos do `calculateFit` e limiares do `calculateChance`. Uma exceção
+  autorizada pelo mantenedor em 2026-09-01, e só ela: tornar `budgetFit`
+  contínuo na fronteira do orçamento, multiplicando o ramo de acima do
+  orçamento por 0,7. Hoje a função salta de 0,70 para ~0,95 quando a
+  mensalidade passa do orçamento, premiando o curso mais caro. Os sete pesos
+  seguem intocados
 - Introdução de dependências ou etapa de build fora de um plano aprovado.
   O Codex tem acesso a rede e **consegue** rodar `npm install` — isto é regra,
   não impedimento técnico

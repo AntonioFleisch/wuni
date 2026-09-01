@@ -47,7 +47,7 @@ export function sortRecommendations(
 
 export function partitionByFit(
   recomendacoes: Recomendacao[],
-  ratio = 0.5,
+  distanciaMaxima = 15,
 ): { principais: Recomendacao[]; secundarias: Recomendacao[] } {
   if (recomendacoes.length === 0) {
     return { principais: [], secundarias: [] };
@@ -57,7 +57,7 @@ export function partitionByFit(
     (maior, recomendacao) => Math.max(maior, recomendacao.fit),
     0,
   );
-  const limiar = maiorFit * ratio;
+  const limiar = maiorFit - distanciaMaxima;
   const principais: Recomendacao[] = [];
   const secundarias: Recomendacao[] = [];
 
