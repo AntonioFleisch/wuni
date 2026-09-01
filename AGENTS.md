@@ -56,6 +56,25 @@ As duas últimas linhas são as mais frágeis: prometem dado que o produto não
 tem — datas oficiais de vestibular e trilha de estudo. Não as trate como
 escopo confirmado sem o mantenedor dizer de onde vem o dado.
 
+#### Dado que o produto exibe — decidido em 2026-09-01
+
+A base vai passar de 16 cursos mockados para mais de mil, vindos de fontes
+oficiais. Isso obriga a dizer, campo a campo, o que é sustentável:
+
+- **Mensalidade é faixa, não valor.** Nenhuma base oficial publica
+  mensalidade de instituição privada; valor exato seria falsa precisão, a
+  mesma que o `calculateChance` recusa. `budgetFit` passa a comparar
+  orçamento com faixa, e como fazer isso é decisão da spec que remodelar os
+  dados.
+- **Salário médio de egressos sai.** Só sairia cruzando base de vínculo
+  empregatício por pessoa, que não temos. Some do modelo, da tela e do
+  critério de ordenação.
+- **SiSU é a primeira fonte a entrar**, por dar nota de corte — sem ela
+  `calculateChance` não tem o que classificar.
+
+Nada disso altera o motor por conta própria: `lib/recommendation/` só muda
+por spec, junto com o remodelamento dos dados.
+
 Regra que atravessa todas: **cálculo é `lib/`, tela é `app/`.** Comparador,
 simulador e Plano A/B/C são regra de negócio com uma interface por cima, não
 componentes que fazem conta.
@@ -278,6 +297,11 @@ que falta se escreve neles — não se resolve mantendo sessão viva.
 - **Claude Code: uma sessão por ciclo de spec** — escrever, aguardar
   execução, revisar. Entre specs diferentes, reset. A centena no nome do
   arquivo marca o ciclo (ver `docs/tasks/README.md`).
+- **Spec entregue não se edita em silêncio.** Se ela mudar depois de o Codex
+  começar, ele entrega a versão que leu e a revisão reprova algo que foi
+  executado corretamente. Mudou? Avise antes, ou espere a entrega e trate a
+  diferença como correção. Vale para a spec pelo mesmo motivo que Claude não
+  commita durante a execução: não mover a base de comparação.
 - **Resete agora** se um agente citar caminho ou comando que não existe,
   reabrir decisão já registrada aqui, ou precisar da mesma correção duas
   vezes.
