@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, execução da 102 sobre o commit
-> `7e65d1d`.
+> **Última verificação:** 2026-09-01, execução da 103 sobre o commit
+> `45783f9`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -25,8 +25,9 @@ critério de ordenação foram removidos. O `budgetFit` agora é contínuo na
 fronteira do orçamento e usa o pior caso aplicável da faixa.
 
 Os arquivos estáticos continuam no repositório como fonte para as próximas
-specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
-backend próprio nem autenticação.
+specs, mas não foram integrados ao App Router. `server/cursos.ts` já expõe a
+fronteira assíncrona `listarCursos()` sobre o _seed_ em memória. Ainda não
+existe API, banco de dados nem autenticação.
 
 Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
@@ -40,11 +41,9 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **103** — `db/seed/cursos.ts` com os 16 cursos convertidos,
-`server/cursos.ts` com `listarCursos()` em memória, a direção de dependência
-virando regra de ESLint e o Prettier entrando no portão de lint.
-Especificada em `docs/tasks/`. É a spec que faz a estrutura de pastas do
-`AGENTS.md` existir de verdade.
+Aguardando revisão: **103** — os 16 cursos convertidos em `db/seed/cursos.ts`,
+`listarCursos()` em memória, direção de dependência verificada pelo ESLint e
+Prettier integrado ao portão de lint (`1b13474` a `45783f9`).
 
 Depois dela, a **104** traz o tipo do perfil completo e o parser tolerante do
 que vem do `localStorage` — a fronteira que normaliza dado incompleto antes
@@ -75,7 +74,7 @@ Nome do produto: **Wuni**.
 - Prettier 3.9.6 com `eslint-config-prettier` 10.1.8
 - Vitest 4.1.11
 - npm com lockfile; `node_modules/` e artefatos do Next ignorados
-- Sem backend próprio, API, banco ou autenticação
+- Fronteira de cursos em memória; sem API, banco ou autenticação
 - HTML5, CSS3 e JavaScript vanilla (ES2020) legados ainda presentes
 - Todo o estado do usuário legado continua em `localStorage`
 
@@ -83,7 +82,9 @@ Nome do produto: **Wuni**.
 
 ```text
 app/                    App Router; página padrão do scaffold
+db/seed/                seed tipado dos 16 cursos e testes de invariantes
 lib/recommendation/     motor TypeScript puro e seus testes unitários
+server/                 casos de uso; listarCursos() em memória e seus testes
 public/                 assets padrão do scaffold
 index.html              landing institucional
 perfil.html             formulário de perfil + teste vocacional
@@ -129,21 +130,25 @@ npm run test
 npm run build
 ```
 
-O Vitest cobre o motor de recomendação em três arquivos, um por módulo de
-comportamento. O teste de fumaça temporário foi removido. A verificação visual
-continua a cargo da revisão; a 101 não renderiza interface.
+O Vitest cobre o motor de recomendação, as invariantes do _seed_ e
+`listarCursos()` em cinco arquivos, com 47 testes. A verificação visual
+continua a cargo da revisão; a 103 não renderiza interface.
 
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
 no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são
 módulos, e serão removidos ao fim do porte.
 
-**Buraco no portão de lint.** O `AGENTS.md` descreve o portão como "ESLint
-zero erros, Prettier aplicado", mas `npm run lint` roda só o ESLint — e o
-`eslint-config-prettier` apenas desliga regras conflitantes, não formata nem
-verifica formatação. Na prática, nada verifica Prettier hoje:
-`lib/recommendation/score.ts` está em `main` fora do formato e passou nos
-quatro portões. Descoberto na revisão da 102, em 2026-09-01. A 103 fecha o
-buraco e formata o arquivo. Até lá, o portão promete mais do que cumpre.
+O buraco do Prettier foi fechado: `npm run lint` executa ESLint e
+`prettier --check .`; `.prettierignore` exclui o legado, Markdown e artefatos
+de build. `lib/recommendation/score.ts`, único código que estava fora do
+formato, foi reformatado sem alteração de lógica.
+
+A direção de dependência também é verificada pelo ESLint. Foram testadas por
+violações temporárias, tanto com alias quanto com caminho relativo, as quatro
+zonas proibidas: `lib/` → `app/`, `components/`, `server/`, `db/`; `db/` →
+`app/`, `components/`, `server/`; `server/` → `app/`, `components/`; e
+`app/`/`components/` → `db/`. Todas falharam com a mensagem específica da
+camada antes de os imports de prova serem removidos.
 
 ## Restrição do código atual
 
@@ -175,10 +180,10 @@ trás: Plano A/B/C, comparador, simulador financeiro, calendário inteligente e
 plano de preparação. A landing promete mais do que o produto entrega. Não
 assuma que existe código para esses recursos.
 
-Base de dados: 16 cursos hardcoded em `js/data.js`, sendo 11 de Administração.
-Cobre 5 cidades. É ilustrativa, não uma amostra representativa. O legado
-continua com mensalidade numérica e só será convertido quando o _seed_ for
-criado.
+Base de dados: os 16 cursos hardcoded em `js/data.js`, sendo 11 de
+Administração, foram copiados para o _seed_ tipado em `db/seed/cursos.ts`.
+Cobre 5 cidades e continua ilustrativa, não representativa. O legado mantém a
+mensalidade numérica; o _seed_ usa faixas degeneradas e não inclui salário.
 
 ## Bugs conhecidos
 
