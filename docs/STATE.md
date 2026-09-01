@@ -3,19 +3,26 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-08-31, contra o commit `6ff81bf`.
+> **Última verificação:** 2026-08-31, contra o commit `ac0a8d6`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
-> tarefa. Ver *Manutenção* no `AGENTS.md`.
+> tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
 ## Marco atual
 
-Migração para a arquitetura alvo **ainda não iniciada**. Nenhuma tarefa de
-implementação foi executada. Não existe `package.json`, `node_modules`,
-TypeScript, Next.js, banco de dados nem autenticação neste repositório.
+Migração para a arquitetura alvo **iniciada**. O scaffold do Next está
+implementado; nenhuma página do produto foi portada ainda. `app/` contém
+somente a página inicial padrão gerada pelo `create-next-app`.
+
+Os arquivos estáticos continuam no repositório como fonte para as próximas
+specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
+backend próprio nem autenticação.
 
 Concluídas: **001** (marca "Wuni" e chave de tema da landing).
 
-Próxima tarefa: **`docs/tasks/002-scaffold-next.md`**.
+Em revisão: **002** (scaffold Next, TypeScript e ferramental), implementada nos
+commits `1a75085`, `9c835f3`, `5ade79e` e `ac0a8d6`.
+
+Próxima tarefa: ainda não especificada.
 
 ### Estratégia de migração — decidida
 
@@ -34,17 +41,23 @@ Nome do produto: **Wuni**.
 
 ## Stack, hoje
 
-Site estático. HTML5 + CSS3 + JavaScript vanilla (ES2020).
-
-- Sem build, bundler, transpilador ou `package.json`
-- Sem dependências npm
-- Sem backend, API ou banco
-- Única dependência externa: Google Fonts (Sora + Inter) via CDN
-- Todo o estado do usuário vive em `localStorage`
+- Next.js 16.3.4 com App Router, em `app/`
+- React 19.2.8
+- TypeScript 5.9.3 em modo `strict`
+- ESLint 9.39.5 com `eslint-config-next` 16.3.4
+- Prettier 3.9.6 com `eslint-config-prettier` 10.1.8
+- Vitest 4.1.11
+- npm com lockfile; `node_modules/` e artefatos do Next ignorados
+- Sem backend próprio, API, banco ou autenticação
+- HTML5, CSS3 e JavaScript vanilla (ES2020) legados ainda presentes
+- Todo o estado do usuário legado continua em `localStorage`
 
 ## Árvore
 
 ```text
+app/                    App Router; página padrão do scaffold
+lib/smoke.test.ts       teste temporário do runner Vitest
+public/                 assets padrão do scaffold
 index.html              landing institucional
 perfil.html             formulário de perfil + teste vocacional
 recomendacoes.html      lista filtrável com Fit Score
@@ -55,6 +68,12 @@ js/ui.js                helpers de chips de seleção múltipla
 js/main.js              tema claro/escuro, menu mobile, animações
 js/profile.js           página de perfil e teste vocacional
 js/recommendations.js   Fit Score, chance de aprovação, filtros, ordenação
+package.json            scripts e dependências npm
+package-lock.json       lockfile da instalação
+tsconfig.json           TypeScript strict e alias @/*
+eslint.config.mjs       ESLint do Next integrado ao Prettier
+.prettierrc.json        convenções de formatação
+next.config.ts          configuração do Next
 AGENTS.md               contexto durável
 CLAUDE.md               ponteiro para AGENTS.md
 docs/STATE.md           este arquivo
@@ -64,24 +83,34 @@ docs/tasks/             planos de tarefa
 ## Como rodar
 
 ```bash
-python3 -m http.server 8000   # depois: http://localhost:8000
+npm ci
+npm run dev   # depois: http://localhost:3000
 ```
 
-Abrir `index.html` com duplo clique também funciona — não há `fetch`, então
-`file://` carrega tudo.
+Os arquivos legados ainda podem ser servidos separadamente com
+`python3 -m http.server 8000` ou abertos por `file://`; isso serve apenas como
+referência durante o porte e não é convivência incremental de produção.
 
 ## Verificação disponível
 
-Não há testes, linter, formatter, CI nem build. **Nenhum dos portões de
-qualidade do `AGENTS.md` é executável ainda.**
+Todos os portões de qualidade do `AGENTS.md` são executáveis:
 
-A verificação hoje é abrir a página no navegador e conferir o comportamento,
-em tema claro e escuro, em largura desktop e mobile.
+```bash
+npm run typecheck
+npm run lint
+npm run test
+npm run build
+```
+
+O lint passa com zero erros e 16 warnings nos JavaScripts legados. O Vitest tem
+um único teste de fumaça temporário, que será removido quando o motor de
+recomendação for portado. A verificação visual continua a cargo da revisão.
 
 ## Restrição do código atual
 
-Não há módulos ES. Todos os `.js` rodam em escopo global e se enxergam por
-ordem de inclusão. Cada página declara sua lista:
+Esta restrição vale para o código legado. Nele não há módulos ES: todos os
+`.js` rodam em escopo global e se enxergam por ordem de inclusão. Cada página
+declara sua lista:
 
 - `index.html` → `main.js`
 - `perfil.html` → `data` → `storage` → `ui` → `main` → `profile`
