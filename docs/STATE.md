@@ -17,12 +17,11 @@ Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
 backend próprio nem autenticação.
 
-Concluídas: **001** (marca "Wuni" e chave de tema da landing).
+Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
+**002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
+`5ade79e`, `ac0a8d6`, `0ba413c`).
 
-Em revisão: **002** (scaffold Next, TypeScript e ferramental), implementada nos
-commits `1a75085`, `9c835f3`, `5ade79e` e `ac0a8d6`.
-
-Próxima tarefa: ainda não especificada.
+Próxima tarefa: **003**, ainda não especificada.
 
 ### Estratégia de migração — decidida
 
@@ -102,9 +101,19 @@ npm run test
 npm run build
 ```
 
-O lint passa com zero erros e 16 warnings nos JavaScripts legados. O Vitest tem
-um único teste de fumaça temporário, que será removido quando o motor de
-recomendação for portado. A verificação visual continua a cargo da revisão.
+O Vitest tem um único teste de fumaça temporário, que será removido quando o
+motor de recomendação for portado. A verificação visual continua a cargo da
+revisão.
+
+**Pendência do lint.** Passa com zero erros, mas emite 16 warnings em
+`js/*.js`. São falsos positivos: o ESLint analisa aqueles arquivos como
+módulos e acusa `buildChipSelect`, `setChipSelectActive` e afins de "defined
+but never used", quando na verdade são globais consumidos por outro arquivo
+via `<script>`. O legado não deve ser lintado — ele será removido ao fim do
+porte. Adicionar `js/**` ao `globalIgnores` do `eslint.config.mjs` resolve.
+
+Não é cosmético: warning permanente treina todo mundo a ignorar warning, e o
+próximo aviso real nasce escondido no meio dos 16. Corrigir junto com a 003.
 
 ## Restrição do código atual
 

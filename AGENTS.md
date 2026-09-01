@@ -13,10 +13,11 @@ e avise o mantenedor.
 > junto o contexto durável, que passa a ser lido com desconfiança. Isolando o
 > volátil, este arquivo muda raramente e pode ser tratado como confiável.
 
-> **Atenção.** O repositório hoje é um site estático em HTML/CSS/JS puro.
-> A arquitetura alvo abaixo é Next.js + backend + banco, e **a migração ainda
-> não começou**. Ao ler *Arquitetura alvo*, entenda "para onde vamos", não
-> "o que está aqui".
+> **Atenção.** A migração começou. O Next, o TypeScript e o ferramental já
+> existem; o site estático legado continua no repositório como fonte para o
+> porte, e ainda não há banco nem autenticação. Nenhuma página do produto foi
+> portada. O `STATE.md` diz exatamente o que já existe — consulte-o antes de
+> assumir que qualquer parte da *Arquitetura alvo* está construída.
 
 ## O produto
 
@@ -30,7 +31,7 @@ pais, escolas e cursinhos.
 
 Estágio: MVP mínimo, prestes a ser reescrito.
 
-## Arquitetura alvo — decidida, ainda não construída
+## Arquitetura alvo — em construção
 
 - **Framework:** Next.js (App Router) + TypeScript em modo `strict`
 - **Banco:** PostgreSQL
@@ -74,7 +75,7 @@ Adote apenas depois que o mantenedor confirmar:
 
 ## Portões de qualidade
 
-Valem a partir da migração. Antes dela nenhum é executável — ver `STATE.md`.
+Executáveis desde a spec 002.
 
 Uma tarefa só está pronta quando **todos** passam:
 
