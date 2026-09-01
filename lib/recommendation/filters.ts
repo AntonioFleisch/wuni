@@ -44,7 +44,10 @@ export function matchesFilters(curso: Curso, filtros: Filtros): boolean {
   ) {
     return false;
   }
-  if (curso.mensalidade > 0 && curso.mensalidade > filtros.mensalidadeMax)
+  if (
+    curso.mensalidade !== null &&
+    curso.mensalidade.min > filtros.mensalidadeMax
+  )
     return false;
   if (curso.notaMEC < filtros.mecMin) return false;
   if (filtros.somenteBolsas && !curso.bolsas) return false;
