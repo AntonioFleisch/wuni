@@ -43,11 +43,11 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **104**, ainda não especificada. Ela traz o tipo do perfil
-completo e o parser tolerante do que vem do `localStorage` — a fronteira que
-normaliza dado incompleto antes de o motor vê-lo, e que vira o importador do
-primeiro login. Com ela pronta, a primeira tela passa a ser portável assim
-que o CSS for confirmado.
+Próxima tarefa: **104** — `lib/perfil/` com o tipo do perfil completo e o
+parser tolerante do que vem do `localStorage`, especificada em `docs/tasks/`.
+É a fronteira que normaliza dado incompleto antes de o motor vê-lo, e que
+vira o importador do primeiro login. Com ela pronta, a primeira tela passa a
+ser portável assim que o CSS for confirmado.
 
 ### Estratégia de migração — decidida
 
