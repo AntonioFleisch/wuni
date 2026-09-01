@@ -3,7 +3,7 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-08-31, contra o commit `e8e1327`.
+> **Última verificação:** 2026-08-31, contra o commit `6ff81bf`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver *Manutenção* no `AGENTS.md`.
 
@@ -13,8 +13,9 @@ Migração para a arquitetura alvo **ainda não iniciada**. Nenhuma tarefa de
 implementação foi executada. Não existe `package.json`, `node_modules`,
 TypeScript, Next.js, banco de dados nem autenticação neste repositório.
 
-Próxima tarefa: **`docs/tasks/001-normaliza-marca-wuni.md`**, aguardando
-execução.
+Concluídas: **001** (marca "Wuni" e chave de tema da landing).
+
+Próxima tarefa: **`docs/tasks/002-scaffold-next.md`**.
 
 ### Estratégia de migração — decidida
 
@@ -122,13 +123,8 @@ Carregam para a arquitetura nova; precisam ser resolvidos na migração:
    mas um container que passe pelos dois ganha listeners duplicados e o
    toggle se anula.
 
-Morrem com a migração; consertar agora pode ser trabalho jogado fora,
-dependendo da estratégia adotada:
-
-3. `index.html:16` lê a chave de tema `"Wunii-theme"`, mas `js/main.js:3`
-   grava em `"wuni-theme"`. Na landing o tema salvo nunca é restaurado.
-4. Marca inconsistente: `index.html` diz "Wunii"; `perfil.html`,
-   `recomendacoes.html` e o README dizem "Wuni".
+Resolvidos: chave de tema da landing e marca inconsistente, ambos na
+tarefa 001 (`7c5329f`, `6ff81bf`).
 
 ## Decisões pendentes — não decida sozinho
 

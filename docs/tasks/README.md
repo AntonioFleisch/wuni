@@ -1,63 +1,47 @@
 # docs/tasks/
 
-Planos de tarefa. Cada arquivo é a especificação completa de um trabalho a ser
-executado pelo agente implementador.
-
-## Nomenclatura
-
-`NNN-slug.md` — número sequencial de três dígitos, slug em kebab-case.
-Exemplo: `001-corrige-chave-tema-landing.md`.
-
-O número nunca é reaproveitado. Um plano concluído permanece no repositório
-como registro do que foi decidido e por quê.
+Planos de tarefa. `NNN-slug.md`, numeração sequencial, nunca reaproveitada.
+Um plano concluído fica no repositório como registro.
 
 ## Formato
 
-Todo plano tem estas cinco seções, nesta ordem:
+Quatro seções. **Proporcionais à tarefa** — uma troca de string não precisa de
+duas páginas de contexto. Se a spec ficou maior que o diff que ela produz,
+corte.
 
 ```markdown
 # NNN — Título
 
 ## Objetivo
-O que muda e por quê, do ponto de vista do produto. Dois a quatro parágrafos
-curtos. Quem lê precisa entender a motivação sem ter visto o código.
-
-## Arquivos afetados
-Lista explícita de caminhos, com uma linha dizendo o que acontece em cada um.
-Se um arquivo novo for criado, diga onde ele entra na ordem de <script>.
+O que muda e por quê. Curto. Só o que o executor precisa para não errar.
 
 ## Passos
-Sequência numerada e verificável. Cada passo é uma ação concreta, não uma
-intenção. Inclua trechos de código quando a forma exata importar.
+Ações concretas e verificáveis. Cite arquivos e âncoras de texto localizáveis
+por busca, não números de linha — eles envelhecem entre o plano e a execução.
+Inclua trecho de código só quando a forma exata importar.
 
 ## Critério de pronto
-Dividido em dois blocos, sempre.
+Comandos que o executor roda e cujo resultado ele lê: testes, typecheck,
+lint, build, grep, inspeção de diff.
 
-**Bloco 1 — o que o executor verifica.** Comandos que ele consegue rodar e
-cujo resultado ele consegue ler: grep, testes, typecheck, lint, build,
-inspeção de diff. Mais os portões do AGENTS.md que já existirem no
-repositório naquele momento.
-
-**Bloco 2 — o que fica para a revisão.** Tudo que exija olhar a página
-renderizada: layout, contraste, flash de tema, comportamento responsivo.
-O Codex CLI não controla navegador. Listar isso explicitamente serve para
-ele saber o que **não** precisa cobrir — sem essa separação, ele improvisa
-um substituto e declara pronto o que não verificou.
+Se algo exigir olhar a página renderizada — layout, contraste, flash de tema,
+responsivo —, liste em "fica para a revisão". O Codex CLI não controla
+navegador; sem isso escrito, ele improvisa um substituto e declara pronto o
+que não verificou. É a única cerimônia do formato que não é opcional.
 
 ## O que NÃO tocar
-Arquivos, funções e decisões fora do escopo desta tarefa, com o motivo.
-Sempre presente, mesmo que curto. Inclua sempre `docs/STATE.md`: ele é
-atualizado depois que a revisão passa, nunca junto com a implementação.
+Só o que corre risco real de ser alterado por engano. Se não há risco, omita
+a seção.
 ```
 
-## Regra de escrita
+## Regras
 
-O plano é escrito para um agente que **não participou** da conversa que o
-originou. Nada de implícito, nenhuma referência a diálogo anterior, nenhum
-"como discutimos". Se um contexto é necessário para executar, ele está no
-plano ou no `AGENTS.md`.
+O plano é escrito para um agente que não participou da conversa que o
+originou: nada implícito, nenhum "como discutimos".
 
-## Regra de execução
+Se o plano estiver ambíguo ou contradisser o código, pare e reporte. Não
+improvise para destravar.
 
-Se o plano estiver ambíguo, incompleto ou contradisser o estado real do
-código, pare e reporte ao mantenedor. Não improvise para destravar.
+Atualize `docs/STATE.md` na mesma tarefa quando ela mudar algo que o arquivo
+descreve — estrutura, bug conhecido, portão de qualidade. Erro ali é corrigido
+na revisão; não vale um passo separado.

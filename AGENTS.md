@@ -196,7 +196,7 @@ revisão.
 
 | Skill | Quando | Por quê |
 | --- | --- | --- |
-| **`code-review`** | **Obrigatória** ao revisar todo diff do Codex | É o núcleo do papel de revisor. `/code-review ultra` é acionado só pelo mantenedor |
+| **`code-review`** | Em diff com lógica: motor, queries, auth, componente novo. Diff trivial (renomeação, string, config) revisa direto | É o núcleo do papel de revisor, mas desproporcional em mudança mecânica. `/code-review ultra` é acionado só pelo mantenedor |
 | **`security-review`** | **Obrigatória** em todo plano que toque auth, sessão, query ou `.env` | Contas de usuário e banco entram agora; é onde erro vira vazamento de dados de menores de idade |
 | `ui-ux-pro-max` | Escrevendo plano de tela | Cobre React/Next, paletas, tipografia e diretrizes de UX. O plano sai com a especificação pronta, e o Codex não improvisa design |
 | `ckm-design-system` | Plano de portar os tokens para o Next | Arquitetura de tokens em camadas. Ponto de maior risco visual da migração |
@@ -219,18 +219,10 @@ plano? Pare e reporte — não redecida.
 
 ## Manutenção deste arquivo
 
-- **`docs/STATE.md` é atualizado depois que a revisão passa**, como passo
-  separado — nunca junto com a implementação, e não pelo Codex. O arquivo
-  descreve o que é verdade, e uma correção só é verdade depois de
-  verificada; atualizá-lo junto com o código faria o documento afirmar como
-  fato algo ainda não confirmado. Todo plano deve dizer isso explicitamente
-  na seção *O que NÃO tocar*.
-- Toda tarefa que altere estrutura de arquivos, resolva um bug conhecido ou
-  torne um portão de qualidade executável gera uma atualização do
-  `STATE.md` — depois da revisão. Atualize também a data e o commit no topo.
-- **Decisão tomada pelo mantenedor** (encerrar uma pendência, fixar um nome,
-  escolher uma estratégia) é registrada pelo Claude Code assim que é
-  comunicada. Não depende de revisão: a decisão já é o fato.
+- **`docs/STATE.md` é atualizado na mesma tarefa** que muda algo que ele
+  descreve — estrutura, bug conhecido, portão de qualidade —, junto com a
+  data e o commit no topo. Erro ali é corrigido na revisão. Não é passo
+  separado.
 - **`AGENTS.md` é atualizado apenas pelo Claude Code**, por instrução do
   mantenedor. O Codex não edita este arquivo; se algo aqui estiver errado,
   reporte em vez de corrigir.
