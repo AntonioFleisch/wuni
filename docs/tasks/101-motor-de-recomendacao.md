@@ -28,9 +28,16 @@ specs de tela. **Perfil pesa, não corta.**
   só como peso, e esse ramo volta a ser alcançável.
 - **Fit baixo não some, é relegado.** Como nada mais é descartado por perfil,
   o motor expõe `partitionByFit`, que separa a lista em principais e
-  secundárias por um limiar relativo ao maior Fit Score da própria lista
-  (padrão: metade). Onde e como exibir as secundárias — a aba colapsável — é
-  decisão da spec de tela, não desta.
+  secundárias por **distância em pontos do maior Fit Score da própria
+  lista**, padrão 15. Onde e como exibir as secundárias — a aba colapsável —
+  é decisão da spec de tela, não desta.
+
+  O corte é por distância, e não por proporção do máximo, porque proporção
+  não separa nada: os sete fatores dão ao Fit Score piso alto, e contra os 16
+  cursos mockados ele varia entre 64 e 93 no perfil padrão. Metade do maior
+  daria 46,5 e deixaria a seção colapsável sempre vazia. Com 15 pontos, o
+  perfil padrão relega os cinco cursos fora da área declarada e mantém as
+  onze Administrações. Não substitua por percentual.
 - **Uma única exceção fica sendo corte:** `aceitaMorarFora === false` com
   `cidadesAceita` não-vazia. Não poder mudar de cidade é restrição factual,
   não preferência; um peso de 10% não seguraria isso. Fica isolada em
@@ -189,15 +196,14 @@ export interface Filtros {
   `sortCourses`, no legado (`fit` e `salario` decrescentes, `mensalidade` e
   `evasao` crescentes, `mec` decrescente). Desempate sempre por `curso.id`
   ascendente, para o resultado ser determinístico e testável.
-- `partitionByFit(recomendacoes: Recomendacao[], ratio = 0.5): { principais: Recomendacao[]; secundarias: Recomendacao[] }`
-  — limiar é `maiorFit * ratio`; entra em `principais` quem tem
+- `partitionByFit(recomendacoes: Recomendacao[], distanciaMaxima = 15): { principais: Recomendacao[]; secundarias: Recomendacao[] }`
+  — limiar é `maiorFit - distanciaMaxima`; entra em `principais` quem tem
   `fit >= limiar`. Calcule o maior fit percorrendo a lista, **sem assumir que
   ela chegou ordenada**. Lista vazia devolve as duas listas vazias, sem
-  `-Infinity` e sem divisão por zero. Preserve a ordem relativa de entrada
-  dentro de cada lado.
+  `-Infinity`. Preserve a ordem relativa de entrada dentro de cada lado.
 
-O `ratio` é padrão provisório, não constante sagrada: deixe-o como parâmetro
-com valor padrão, não como número solto no corpo da função.
+`distanciaMaxima` é padrão provisório, não constante sagrada: deixe-o como
+parâmetro com valor padrão, não como número solto no corpo da função.
 
 ### 5. `index.ts`
 
@@ -222,7 +228,9 @@ teste**, e estes casos de fronteira são obrigatórios:
 - turnos: preferência vazia, casando e não casando
 - fit é inteiro entre 0 e 100 em todos os casos acima
 - `partitionByFit` com lista de um item só (o próprio item é o máximo, logo é
-  principal), e com empate de fit no limiar
+  principal), com fit exatamente no limiar (`maiorFit - distanciaMaxima`
+  entra em `principais`), e com todos os itens dentro da distância —
+  `secundarias` vazia é resultado legítimo, não falha
 - `sortRecommendations` com dois cursos de mesmo valor no critério, provando
   o desempate por `id`
 

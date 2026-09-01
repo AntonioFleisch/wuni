@@ -152,9 +152,15 @@ peso: filtro duplo que esconde cursos adjacentes ao que o aluno declarou e
 transforma o ramo `courseMatch = 0.25` em código morto. Interesse não volta a
 ser corte.
 
-Fit baixo não some da tela, é relegado: a lista se separa por um limiar
-relativo ao maior Fit Score da própria lista, e a parte de baixo vive numa
+Fit baixo não some da tela, é relegado: a lista se separa por **distância em
+pontos do maior Fit Score da própria lista**, e a parte de baixo vive numa
 seção colapsável. O limiar é parâmetro com padrão, nunca número solto.
+
+Distância, e não proporção do máximo: o Fit Score tem piso alto — cinco dos
+sete fatores valem 1 quando o perfil não restringe, e `qualityFit` não desce
+de 0,6 —, então ele varia entre 64 e 93 contra a base atual. Qualquer corte
+percentual do máximo cai abaixo do piso e deixa a seção colapsável vazia.
+Medido em 2026-09-01; refazer a medição quando a base de cursos crescer.
 
 Única exceção, e ela é fechada: `aceitaMorarFora === false` com
 `cidadesAceita` preenchida continua descartando cursos de outras cidades. Não
