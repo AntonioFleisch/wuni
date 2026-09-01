@@ -92,6 +92,10 @@ correta da ordem de dependência. `main.js` roda em todas as páginas e assume
 que `#year`, `#nav-toggle` e `#main-nav` existem.
 
 Chaves de `localStorage` em uso: `wuni_profile` (perfil), `wuni-theme` (tema).
+Os separadores são inconsistentes — sublinhado num, hífen no outro — e isso
+fica como está. Renomear `wuni_profile` apaga o perfil de todo usuário que já
+usou o site. A chave sobrevive à migração: o `AGENTS.md` prevê importar o
+perfil do `localStorage` no primeiro login.
 
 ## O que é real e o que é maquete
 

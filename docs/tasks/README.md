@@ -1,7 +1,15 @@
 # docs/tasks/
 
-Planos de tarefa. `NNN-slug.md`, numeração sequencial, nunca reaproveitada.
-Um plano concluído fica no repositório como registro.
+Planos de tarefa pendentes. `NNN-slug.md`, numeração sequencial, nunca
+reaproveitada.
+
+**Esta pasta contém apenas trabalho ainda não feito.** A spec é apagada
+quando a revisão passa, no mesmo commit — depois que o que for durável nela
+migrou para `AGENTS.md` ou `docs/STATE.md`. Recuperar uma spec concluída:
+`git log -- docs/tasks/NNN-*.md`.
+
+Por isso as specs não se referenciam entre si: cada uma é autossuficiente, e
+uma referência a spec anterior ficaria pendurada.
 
 ## Formato
 

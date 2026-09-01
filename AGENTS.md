@@ -226,5 +226,16 @@ plano? Pare e reporte — não redecida.
 - **`AGENTS.md` é atualizado apenas pelo Claude Code**, por instrução do
   mantenedor. O Codex não edita este arquivo; se algo aqui estiver errado,
   reporte em vez de corrigir.
+- **A spec é apagada quando a revisão passa**, no mesmo commit da revisão,
+  pelo Claude Code. Antes de apagar, o que for durável nela — uma decisão
+  tomada, uma restrição descoberta, uma armadilha que vale lembrar — migra
+  para o `AGENTS.md` ou para o `STATE.md`. Só então some.
+
+  O conteúdo não se perde: `git log -- docs/tasks/NNN-*.md` devolve a spec
+  inteira, e o `STATE.md` guarda o número e os commits em *Concluídas*.
+  Apagar serve para que `docs/tasks/` signifique exatamente uma coisa —
+  **trabalho ainda não feito**. Spec concluída que fica visível vira
+  instrução obsoleta lida como vigente, e é assim que um agente reconstrói a
+  arquitetura antiga por engano.
 - Fato que muda a cada commit vai para o `STATE.md`. Fato que vale por meses
   vai para cá. Na dúvida, `STATE.md`.
