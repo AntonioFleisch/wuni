@@ -143,7 +143,9 @@ Duas exigências para a regra não virar decoração:
 
 1. Todo arquivo de `server/` e de `db/` começa com o marcador de código
    exclusivo de servidor do Next, para que importá-lo de um componente de
-   cliente quebre o build em vez de vazar em silêncio.
+   cliente quebre o build em vez de vazar em silêncio. Vale **a partir do
+   momento em que essas pastas tocarem banco, credencial ou segredo**; para
+   *seed* em memória o marcador seria dependência nova sem nada a proteger.
 2. A direção de dependência vira regra de ESLint com zonas de importação
    restritas, e passa a ser verificada pelo portão de lint. Enquanto não
    existir, é convenção — e convenção não segura agente nenhum.

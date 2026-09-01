@@ -40,12 +40,16 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **103**, ainda não especificada. Ela cria `db/` e `server/`,
-a regra de zonas de import no ESLint, o _seed_ dos cursos já convertido para
-faixa, `listarCursos()` em memória e o parser do perfil vindo do
-`localStorage`. É a spec que faz a estrutura de pastas do `AGENTS.md` existir
-de verdade. Leva junto o buraco do portão de lint descrito em _Verificação
-disponível_.
+Próxima tarefa: **103** — `db/seed/cursos.ts` com os 16 cursos convertidos,
+`server/cursos.ts` com `listarCursos()` em memória, a direção de dependência
+virando regra de ESLint e o Prettier entrando no portão de lint.
+Especificada em `docs/tasks/`. É a spec que faz a estrutura de pastas do
+`AGENTS.md` existir de verdade.
+
+Depois dela, a **104** traz o tipo do perfil completo e o parser tolerante do
+que vem do `localStorage` — a fronteira que normaliza dado incompleto antes
+de o motor vê-lo, e que vira o importador do primeiro login. Com 103 e 104
+prontas, a primeira tela passa a ser portável assim que o CSS for confirmado.
 
 ### Estratégia de migração — decidida
 
