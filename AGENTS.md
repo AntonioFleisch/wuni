@@ -81,7 +81,7 @@ Uma tarefa só está pronta quando **todos** passam:
 | Comando | Portão |
 | --- | --- |
 | `npm run typecheck` | `tsc --noEmit`, zero erros. TS `strict`, sem `any` novo, sem `@ts-ignore` |
-| `npm run lint` | ESLint zero erros, Prettier aplicado |
+| `npm run lint` | ESLint zero erros, Prettier aplicado. A partir do Next 16 o `build` não roda mais o linter — este portão é o único que cobre lint |
 | `npm run test` | Vitest verde |
 | `npm run build` | `next build` conclui |
 

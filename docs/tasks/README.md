@@ -28,6 +28,13 @@ Ações concretas e verificáveis. Cite arquivos e âncoras de texto localizáve
 por busca, não números de linha — eles envelhecem entre o plano e a execução.
 Inclua trecho de código só quando a forma exata importar.
 
+**Especifique resultado, não encantamento.** Comando de ferramenta muda de
+versão para versão, e o que você lembra dele pode estar desatualizado. Diga
+qual portão precisa existir e o que ele deve provar; deixe a forma exata para
+quem executa, que tem como consultar a versão instalada. Escrever
+`"lint": "next lint"` numa spec é fixar de memória exatamente o que a spec
+mandou não fixar de memória.
+
 ## Critério de pronto
 Comandos que o executor roda e cujo resultado ele lê: testes, typecheck,
 lint, build, grep, inspeção de diff.

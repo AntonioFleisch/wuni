@@ -57,16 +57,22 @@ será removido na spec que portar o motor de recomendação.
 
 ### 4. Scripts npm
 
-O `package.json` deve expor exatamente estes nomes, que são os portões
-definidos no `AGENTS.md`:
+O contrato são os **nomes** — `dev`, `build`, `typecheck`, `lint`, `test` —,
+porque é por eles que o `AGENTS.md` define os portões. A implementação de
+cada um é a que a versão instalada do Next usa; não force um comando.
 
-```json
-"dev": "next dev",
-"build": "next build",
-"typecheck": "tsc --noEmit",
-"lint": "next lint",
-"test": "vitest run"
-```
+- `typecheck` → `tsc --noEmit`
+- `test` → `vitest run`
+- `dev`, `build`, `lint` → o que o scaffold gerar. **Não sobrescreva o
+  `lint`.** No Next 16 o `next lint` foi removido em favor do ESLint CLI
+  (`eslint .`), e o `create-next-app` já gera o script e o
+  `eslint.config.mjs` corretos. Se a versão instalada gerar outra coisa,
+  mantenha o que ela gerou e registre no `STATE.md`.
+
+Nota para o passo 5: a partir do Next 16 o `next build` **não roda mais o
+linter**. O portão `lint` é a única coisa que cobre lint — o `build` não
+cobre mais. Isso não muda nada aqui, já que são portões separados, mas não
+colapse os dois no futuro.
 
 ### 5. `.gitignore` e `STATE.md`
 
