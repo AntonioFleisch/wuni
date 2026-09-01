@@ -3,7 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, contra o commit `d495d8f`.
+> **Última verificação:** 2026-09-01, implementação da 101 sobre o commit
+> `618ab83`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -13,6 +14,11 @@ Migração para a arquitetura alvo **iniciada**. O scaffold do Next está
 implementado; nenhuma página do produto foi portada ainda. `app/` contém
 somente a página inicial padrão gerada pelo `create-next-app`.
 
+O motor de recomendação já está portado para TypeScript puro em
+`lib/recommendation/`, com Fit Score, chance, filtros, restrição factual de
+localização, ordenação e partição por fit cobertos por testes unitários. Ainda
+não há página Next consumindo esse motor.
+
 Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
 backend próprio nem autenticação.
@@ -21,10 +27,8 @@ Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
 `5ade79e`, `ac0a8d6`, `0ba413c`).
 
-Próxima tarefa: **101** — portar o motor de recomendação para
-`lib/recommendation/`, especificada em `docs/tasks/`. O ciclo 1 fechou em
-`d495d8f`; a numeração pulou para a centena do ciclo 2, e não existe nem
-existirá uma 003.
+Próximo passo: revisar a implementação da **101**. A spec permanece em
+`docs/tasks/` até a revisão passar; nenhuma tarefa posterior está especificada.
 
 ### Estratégia de migração — decidida
 
@@ -58,7 +62,7 @@ Nome do produto: **Wuni**.
 
 ```text
 app/                    App Router; página padrão do scaffold
-lib/smoke.test.ts       teste temporário do runner Vitest
+lib/recommendation/     motor TypeScript puro e seus testes unitários
 public/                 assets padrão do scaffold
 index.html              landing institucional
 perfil.html             formulário de perfil + teste vocacional
@@ -104,19 +108,13 @@ npm run test
 npm run build
 ```
 
-O Vitest tem um único teste de fumaça temporário, que será removido quando o
-motor de recomendação for portado. A verificação visual continua a cargo da
-revisão.
+O Vitest cobre o motor de recomendação em três arquivos, um por módulo de
+comportamento. O teste de fumaça temporário foi removido. A verificação visual
+continua a cargo da revisão; a 101 não renderiza interface.
 
-**Pendência do lint.** Passa com zero erros, mas emite 16 warnings em
-`js/*.js`. São falsos positivos: o ESLint analisa aqueles arquivos como
-módulos e acusa `buildChipSelect`, `setChipSelectActive` e afins de "defined
-but never used", quando na verdade são globais consumidos por outro arquivo
-via `<script>`. O legado não deve ser lintado — ele será removido ao fim do
-porte. Adicionar `js/**` ao `globalIgnores` do `eslint.config.mjs` resolve.
-
-Não é cosmético: warning permanente treina todo mundo a ignorar warning, e o
-próximo aviso real nasce escondido no meio dos 16. Corrigir junto com a 101.
+Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
+no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são
+módulos, e serão removidos ao fim do porte.
 
 ## Restrição do código atual
 
@@ -156,16 +154,16 @@ Cobre 5 cidades. É ilustrativa, não uma amostra representativa.
 Mapeados. **Não corrija oportunisticamente** — cada um vira um plano em
 `docs/tasks/`, para a correção ser revisada.
 
-Carregam para a arquitetura nova; precisam ser resolvidos na migração:
+Permanecem no legado ou precisam ser resolvidos na migração:
 
 1. `js/recommendations.js:184` descarta todo curso fora de
    `profile.interesses`, além de o Fit Score já penalizar isso com peso.
    Filtro duplo: o usuário nunca vê cursos adjacentes ao que declarou, e o
    ramo `courseMatch = 0.25` vira código morto. É defeito de **regra de
    negócio**. **Decidido em 2026-09-01** — ver _Perfil pesa, não corta_, no
-   `AGENTS.md`. A correção está especificada na 101 e vale para o código
-   novo; o legado continua com o defeito até ser removido, e não deve ser
-   corrigido lá.
+   `AGENTS.md`. A 101 corrigiu o código novo: interesse pesa no Fit Score e
+   não filtra. O legado continua com o defeito até ser removido, e não deve
+   ser corrigido lá.
 2. `wireChipToggle` é chamado dentro de `buildChipSelect` e também
    diretamente em `js/profile.js`. Nos usos atuais os caminhos não se cruzam,
    mas um container que passe pelos dois ganha listeners duplicados e o

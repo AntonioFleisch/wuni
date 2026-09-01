@@ -13,6 +13,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Legado em escopo global, não módulo; sai ao fim do porte.
+    "js/**",
   ]),
   prettierConfig,
 ]);
