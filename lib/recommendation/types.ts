@@ -13,6 +13,11 @@ export type SituacaoMEC = "regular" | "em_avaliacao";
 
 export type Chance = "alta" | "media" | "baixa";
 
+export interface FaixaMensalidade {
+  min: number;
+  max: number;
+}
+
 export interface Curso {
   id: string;
   curso: string;
@@ -25,12 +30,11 @@ export interface Curso {
   turnos: Turno[];
   ingresso: Ingresso[];
   notaCorte: number;
-  mensalidade: number;
+  mensalidade: FaixaMensalidade | null;
   bolsas: boolean;
   custoVidaCidade: CustoVida;
   notaMEC: number;
   taxaEvasao: number;
-  salarioMedioEgressos: number;
   situacaoMEC: SituacaoMEC;
 }
 

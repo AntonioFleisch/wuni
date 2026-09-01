@@ -7,6 +7,7 @@ export type {
   Chance,
   Curso,
   CustoVida,
+  FaixaMensalidade,
   Ingresso,
   Modalidade,
   NotasEnem,
