@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, fechamento da 101 sobre o commit
-> `a872eb4`.
+> **Última verificação:** 2026-09-01, execução da 102 sobre o commit
+> `7e65d1d`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -16,8 +16,13 @@ somente a página inicial padrão gerada pelo `create-next-app`.
 
 O motor de recomendação já está portado para TypeScript puro em
 `lib/recommendation/`, com Fit Score, chance, filtros, restrição factual de
-localização, ordenação e partição por fit cobertos por 37 testes unitários.
+localização, ordenação e partição por fit cobertos por 39 testes unitários.
 Ainda não há página Next consumindo esse motor.
+
+No modelo do motor, mensalidade é uma faixa `{ min, max } | null`: zero é
+gratuito e `null` é dado desconhecido. O salário médio de egressos e seu
+critério de ordenação foram removidos. O `budgetFit` agora é contínuo na
+fronteira do orçamento e usa o pior caso aplicável da faixa.
 
 Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. Ainda não existe banco de dados,
@@ -33,14 +38,14 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **102** — mensalidade como faixa com estado desconhecido,
+Aguardando revisão: **102** — mensalidade como faixa com estado desconhecido,
 saída do salário médio de egressos e correção da descontinuidade do
-`budgetFit`, especificada em `docs/tasks/`. Só `lib/recommendation/`.
+`budgetFit` (`35ec681` a `7e65d1d`).
 
-Depois dela, a **103** cria `db/` e `server/`, a regra de zonas de import no
-ESLint, o _seed_ dos cursos já convertido para faixa, `listarCursos()` em
-memória e o parser do perfil vindo do `localStorage`. É a spec que faz a
-estrutura de pastas do `AGENTS.md` existir de verdade.
+Depois da aprovação, a **103** cria `db/` e `server/`, a regra de zonas de
+import no ESLint, o _seed_ dos cursos já convertido para faixa,
+`listarCursos()` em memória e o parser do perfil vindo do `localStorage`. É a
+spec que faz a estrutura de pastas do `AGENTS.md` existir de verdade.
 
 ### Estratégia de migração — decidida
 
@@ -159,7 +164,9 @@ plano de preparação. A landing promete mais do que o produto entrega. Não
 assuma que existe código para esses recursos.
 
 Base de dados: 16 cursos hardcoded em `js/data.js`, sendo 11 de Administração.
-Cobre 5 cidades. É ilustrativa, não uma amostra representativa.
+Cobre 5 cidades. É ilustrativa, não uma amostra representativa. O legado
+continua com mensalidade numérica e só será convertido quando o _seed_ for
+criado.
 
 ## Bugs conhecidos
 
@@ -182,7 +189,8 @@ Permanecem no legado ou precisam ser resolvidos na migração:
    vale mais do que caber nele. São 4,5 pontos de Fit Score, já que orçamento
    pesa 15%. Encontrado na revisão da 101, em 2026-09-01. O mantenedor
    autorizou a correção no código novo — ver _Limites_, no `AGENTS.md` —, e
-   ela está especificada na 102. O legado morre com o defeito.
+   a 102 a implementou em `lib/recommendation/`. O legado continua com o
+   defeito e morre com ele.
 3. `wireChipToggle` é chamado dentro de `buildChipSelect` e também
    diretamente em `js/profile.js`. Nos usos atuais os caminhos não se cruzam,
    mas um container que passe pelos dois ganha listeners duplicados e o
