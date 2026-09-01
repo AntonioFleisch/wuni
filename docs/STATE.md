@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, execução da 103 sobre o commit
-> `45783f9`.
+> **Última verificação:** 2026-09-01, revisão da 103 sobre o commit
+> `05884dc`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -34,21 +34,20 @@ Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 `5ade79e`, `ac0a8d6`, `0ba413c`), **101** (motor de recomendação em
 TypeScript puro — `6f65c1f`, mais a correção da partição), **102**
 (mensalidade como faixa, saída do salário de egressos e `budgetFit` contínuo
-— `35ec681` a `fbdc3ab`).
+— `35ec681` a `fbdc3ab`), **103** (`db/seed/`, `server/cursos.ts`, fronteiras
+no lint e Prettier no portão — `1b13474` a `05884dc`). Os 16 cursos do _seed_
+foram conferidos campo a campo contra `js/data.js` na revisão, por script.
 
 A partição da lista corta por **distância em pontos do maior fit**, padrão
 15, e não por proporção: o Fit Score varia entre 64 e 93 contra a base atual,
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Aguardando revisão: **103** — os 16 cursos convertidos em `db/seed/cursos.ts`,
-`listarCursos()` em memória, direção de dependência verificada pelo ESLint e
-Prettier integrado ao portão de lint (`1b13474` a `45783f9`).
-
-Depois dela, a **104** traz o tipo do perfil completo e o parser tolerante do
-que vem do `localStorage` — a fronteira que normaliza dado incompleto antes
-de o motor vê-lo, e que vira o importador do primeiro login. Com 103 e 104
-prontas, a primeira tela passa a ser portável assim que o CSS for confirmado.
+Próxima tarefa: **104**, ainda não especificada. Ela traz o tipo do perfil
+completo e o parser tolerante do que vem do `localStorage` — a fronteira que
+normaliza dado incompleto antes de o motor vê-lo, e que vira o importador do
+primeiro login. Com ela pronta, a primeira tela passa a ser portável assim
+que o CSS for confirmado.
 
 ### Estratégia de migração — decidida
 

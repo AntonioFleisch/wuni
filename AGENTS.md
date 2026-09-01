@@ -71,6 +71,10 @@ oficiais. Isso obriga a dizer, campo a campo, o que é sustentável:
   critério de ordenação.
 - **SiSU é a primeira fonte a entrar**, por dar nota de corte — sem ela
   `calculateChance` não tem o que classificar.
+- **Não invente amplitude de faixa.** O *seed* atual usa faixa degenerada
+  (`{ min: v, max: v }`) porque o dado mockado tem valor exato. Faixa larga e
+  `null` chegam com a ingestão real; inventar amplitude agora colocaria no
+  repositório informação que ninguém mediu, indistinguível de dado curado.
 
 Nada disso altera o motor por conta própria: `lib/recommendation/` só muda
 por spec, junto com o remodelamento dos dados.
@@ -146,9 +150,18 @@ Duas exigências para a regra não virar decoração:
    cliente quebre o build em vez de vazar em silêncio. Vale **a partir do
    momento em que essas pastas tocarem banco, credencial ou segredo**; para
    *seed* em memória o marcador seria dependência nova sem nada a proteger.
-2. A direção de dependência vira regra de ESLint com zonas de importação
-   restritas, e passa a ser verificada pelo portão de lint. Enquanto não
-   existir, é convenção — e convenção não segura agente nenhum.
+2. A direção de dependência **é verificada pelo portão de lint** desde a 103,
+   por zonas de importação restritas no `eslint.config.mjs`. A regra pega o
+   alias e o caminho relativo — regra que só pega `@/db/...` dá falsa
+   segurança. Ao criar camada nova, acrescente a zona dela e **viole cada
+   direção de propósito** para confirmar que o lint falha: regra que ninguém
+   tentou quebrar está escrita, não verificada.
+
+**Toda fronteira de dados é `async`, mesmo quando a implementação de hoje é
+síncrona.** `listarCursos()` lê um *seed* em memória e ainda assim devolve
+`Promise`, porque quando o banco entrar só o corpo muda — assinatura,
+chamadores e telas ficam de pé. Fronteira síncrona obriga a reescrever todo
+consumidor depois, e "todo consumidor" inclui as páginas.
 
 Não existe pasta `utils/`. Código sem dono vai para o módulo do domínio a que
 serve.
@@ -180,7 +193,7 @@ Uma tarefa só está pronta quando **todos** passam:
 | Comando | Portão |
 | --- | --- |
 | `npm run typecheck` | `tsc --noEmit`, zero erros. TS `strict`, sem `any` novo, sem `@ts-ignore` |
-| `npm run lint` | ESLint zero erros, Prettier aplicado. A partir do Next 16 o `build` não roda mais o linter — este portão é o único que cobre lint |
+| `npm run lint` | ESLint zero erros **e** `prettier --check`, desde a 103 — antes disso o portão prometia Prettier sem verificar. A partir do Next 16 o `build` não roda mais o linter; este portão é o único que cobre lint |
 | `npm run test` | Vitest verde |
 | `npm run build` | `next build` conclui |
 
