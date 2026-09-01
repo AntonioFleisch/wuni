@@ -65,7 +65,9 @@ Adote apenas depois que o mantenedor confirmar:
   determinísticas — ambos importam com dois agentes editando o mesmo esquema.
   Drizzle é a alternativa razoável, mais leve e SQL-first.
 - **Auth:** Auth.js (NextAuth v5), Google OAuth como método principal.
-  O público é adolescente; conta Google é o que eles já têm.
+  O público é adolescente; conta Google é o que eles já têm. **O mantenedor
+  considera Clerk como alternativa** — decisão adiada; nenhuma spec depende
+  dela por enquanto.
 - **CSS:** portar os design tokens e o sistema de tema claro/escuro atuais
   para `globals.css`, e usar CSS Modules por componente. **Não** adotar
   Tailwind na migração — o sistema visual existente funciona, reescrevê-lo
@@ -139,6 +141,28 @@ interesse no curso 30%, orçamento 15%, nota MEC 15%, compatibilidade acadêmica
 ≥ 1.05 alta, ≥ 0.93 média, abaixo baixa. A escolha por faixas em vez de
 percentual é deliberada — o produto evita falsa precisão do tipo "83% de
 chance". Mantenha a postura, inclusive no texto da interface.
+
+### Perfil pesa, não corta
+
+Decidido em 2026-09-01. Vale para o motor e para toda tela que o consuma.
+
+O perfil do aluno entra no Fit Score como peso e **não** descarta cursos. O
+motor legado filtrava por `interesses` além de já penalizá-los com 30% de
+peso: filtro duplo que esconde cursos adjacentes ao que o aluno declarou e
+transforma o ramo `courseMatch = 0.25` em código morto. Interesse não volta a
+ser corte.
+
+Fit baixo não some da tela, é relegado: a lista se separa por um limiar
+relativo ao maior Fit Score da própria lista, e a parte de baixo vive numa
+seção colapsável. O limiar é parâmetro com padrão, nunca número solto.
+
+Única exceção, e ela é fechada: `aceitaMorarFora === false` com
+`cidadesAceita` preenchida continua descartando cursos de outras cidades. Não
+poder mudar de cidade é restrição factual, não preferência. Fica isolada numa
+função própria, para ser uma linha só se a decisão mudar.
+
+Filtro da tela é escolha explícita do usuário e continua cortando — a regra
+acima é sobre o perfil, não sobre os controles da interface.
 
 ## Limites — não altere sem pedido explícito
 

@@ -3,7 +3,7 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-08-31, contra o commit `ac0a8d6`.
+> **Última verificação:** 2026-09-01, contra o commit `d495d8f`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -21,7 +21,10 @@ Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 **002** (scaffold Next, TypeScript e ferramental — `1a75085`, `9c835f3`,
 `5ade79e`, `ac0a8d6`, `0ba413c`).
 
-Próxima tarefa: **003**, ainda não especificada.
+Próxima tarefa: **101** — portar o motor de recomendação para
+`lib/recommendation/`, especificada em `docs/tasks/`. O ciclo 1 fechou em
+`d495d8f`; a numeração pulou para a centena do ciclo 2, e não existe nem
+existirá uma 003.
 
 ### Estratégia de migração — decidida
 
@@ -113,7 +116,7 @@ via `<script>`. O legado não deve ser lintado — ele será removido ao fim do
 porte. Adicionar `js/**` ao `globalIgnores` do `eslint.config.mjs` resolve.
 
 Não é cosmético: warning permanente treina todo mundo a ignorar warning, e o
-próximo aviso real nasce escondido no meio dos 16. Corrigir junto com a 003.
+próximo aviso real nasce escondido no meio dos 16. Corrigir junto com a 101.
 
 ## Restrição do código atual
 
@@ -159,7 +162,10 @@ Carregam para a arquitetura nova; precisam ser resolvidos na migração:
    `profile.interesses`, além de o Fit Score já penalizar isso com peso.
    Filtro duplo: o usuário nunca vê cursos adjacentes ao que declarou, e o
    ramo `courseMatch = 0.25` vira código morto. É defeito de **regra de
-   negócio** — portar o motor sem decidir isso replica o bug no código novo.
+   negócio**. **Decidido em 2026-09-01** — ver _Perfil pesa, não corta_, no
+   `AGENTS.md`. A correção está especificada na 101 e vale para o código
+   novo; o legado continua com o defeito até ser removido, e não deve ser
+   corrigido lá.
 2. `wireChipToggle` é chamado dentro de `buildChipSelect` e também
    diretamente em `js/profile.js`. Nos usos atuais os caminhos não se cruzam,
    mas um container que passe pelos dois ganha listeners duplicados e o
@@ -172,7 +178,10 @@ tarefa 001 (`7c5329f`, `6ff81bf`).
 
 Se uma tarefa depender de uma delas, pare e pergunte ao mantenedor:
 
-- **Confirmação das escolhas** de ORM, auth e CSS propostas no `AGENTS.md`.
+- **CSS:** confirmação da proposta do `AGENTS.md` (tokens em `globals.css` +
+  CSS Modules, sem Tailwind). Trava o porte de qualquer página.
+- **ORM e auth:** adiados pelo mantenedor em 2026-09-01 — nenhuma spec do
+  ciclo 2 depende deles. Em auth, Clerk entrou como alternativa ao Auth.js.
 - **Origem dos dados de cursos:** curadoria manual no banco ou ingestão de
   bases oficiais (Censo INEP, notas de corte SiSU, cadastro e-MEC). Muda o
   esquema e obriga a tratar licença e atribuição das fontes.
