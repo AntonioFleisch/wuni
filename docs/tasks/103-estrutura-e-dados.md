@@ -152,6 +152,16 @@ você testou.
 7. `git diff --stat` não mostra alteração em `js/**`, `css/**`, `*.html` nem
    em `lib/recommendation/` — exceto a formatação de `score.ts`, que é o
    passo 1.
+8. **`score.ts` mudou só de forma.** O conteúdo do arquivo com **todo espaço
+   em branco removido** precisa ser idêntico antes e depois. Não use
+   `git diff -w`: ele compara linha a linha, e o Prettier une duas linhas numa
+   só — mudança de estrutura de linha, que nenhuma opção de espaço do `git
+   diff` ignora. Compare o conteúdo já sem espaços, por exemplo com
+   `git show HEAD:lib/recommendation/score.ts | tr -d '[:space:]'` contra o
+   mesmo tratamento do arquivo novo; adapte ao shell que você estiver usando.
+   A segunda prova é que os 39 testes continuam passando com os mesmos
+   números — eles cravam valores de Fit Score, então mudança de lógica
+   aparece ali.
 
 **Fica para a revisão:** ler o diff e conferir os 16 cursos convertidos
 contra `js/data.js`, campo a campo. Nada renderiza; não há verificação
@@ -160,7 +170,7 @@ visual.
 ## O que NÃO tocar
 
 - A lógica de `lib/recommendation/`. `score.ts` só é reformatado, não
-  alterado: `git diff -w` nele precisa vir vazio.
+  alterado — como provar isso está no critério de pronto.
 - `js/**`, `css/**`, `*.html`. O legado continua com o modelo antigo.
 - `app/`, `tsconfig.json`, `next.config.ts`.
 - **Não crie `lib/perfil/`.** O tipo do perfil completo e o parser do
