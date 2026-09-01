@@ -1,0 +1,7 @@
+js/
+css/
+*.html
+*.md
+.next/
+out/
+build/

@@ -30,8 +30,7 @@ export function calculateFit(curso: Curso, perfil: Perfil): number {
   } else if (curso.mensalidade.max === 0) {
     budgetFit = 1;
   } else if (curso.mensalidade.max <= perfil.orcamentoMensal) {
-    budgetFit =
-      1 - 0.3 * (curso.mensalidade.max / perfil.orcamentoMensal);
+    budgetFit = 1 - 0.3 * (curso.mensalidade.max / perfil.orcamentoMensal);
   } else if (curso.mensalidade.min > perfil.orcamentoMensal) {
     const over =
       (curso.mensalidade.min - perfil.orcamentoMensal) /
