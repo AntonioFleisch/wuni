@@ -15,12 +15,11 @@ const cursoAdministracao: Curso = {
   turnos: ["matutino"],
   ingresso: ["vestibular_proprio"],
   notaCorte: 600,
-  mensalidade: 1000,
+  mensalidade: { min: 1000, max: 1000 },
   bolsas: true,
   custoVidaCidade: "alto",
   notaMEC: 4,
   taxaEvasao: 10,
-  salarioMedioEgressos: 5000,
   situacaoMEC: "regular",
 };
 
@@ -110,29 +109,43 @@ describe("recommend", () => {
 describe("sortRecommendations", () => {
   const recomendacoes = [
     buildRecomendacao("b", 60, {
-      mensalidade: 500,
+      mensalidade: { min: 500, max: 800 },
       notaMEC: 3,
       taxaEvasao: 5,
-      salarioMedioEgressos: 4000,
     }),
     buildRecomendacao("a", 80, {
-      mensalidade: 1000,
+      mensalidade: { min: 1000, max: 1200 },
       notaMEC: 5,
       taxaEvasao: 15,
-      salarioMedioEgressos: 6000,
     }),
   ];
 
   it.each([
     ["fit", ["a", "b"]],
-    ["mensalidade", ["b", "a"]],
     ["mec", ["a", "b"]],
     ["evasao", ["b", "a"]],
-    ["salario", ["a", "b"]],
   ] as const)("ordena por %s", (criterio, idsEsperados) => {
     expect(
       sortRecommendations(recomendacoes, criterio).map(({ curso }) => curso.id),
     ).toEqual(idsEsperados);
+  });
+
+  it("ordena mensalidade pelo piso, com gratuito primeiro e desconhecido no fim", () => {
+    const mensalidades = [
+      buildRecomendacao("desconhecido", 100, { mensalidade: null }),
+      buildRecomendacao("faixa", 70, {
+        mensalidade: { min: 500, max: 1500 },
+      }),
+      buildRecomendacao("gratuito", 50, {
+        mensalidade: { min: 0, max: 0 },
+      }),
+    ];
+
+    expect(
+      sortRecommendations(mensalidades, "mensalidade").map(
+        ({ curso }) => curso.id,
+      ),
+    ).toEqual(["gratuito", "faixa", "desconhecido"]);
   });
 
   it("devolve array novo sem mutar a entrada", () => {

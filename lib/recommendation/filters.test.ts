@@ -16,12 +16,11 @@ const cursoBase: Curso = {
   turnos: ["noturno"],
   ingresso: ["vestibular_proprio", "enem_direto"],
   notaCorte: 550,
-  mensalidade: 1800,
+  mensalidade: { min: 1800, max: 1800 },
   bolsas: true,
   custoVidaCidade: "alto",
   notaMEC: 4,
   taxaEvasao: 18,
-  salarioMedioEgressos: 3800,
   situacaoMEC: "regular",
 };
 
@@ -112,10 +111,28 @@ describe("matchesFilters", () => {
     ).toBe(false);
   });
 
-  it("mantém curso gratuito mesmo com limite baixo de mensalidade", () => {
+  it("filtra mensalidade pelo piso sem cortar faixa parcial ou dado ausente", () => {
     expect(
       matchesFilters(
-        { ...cursoBase, mensalidade: 0 },
+        { ...cursoBase, mensalidade: { min: 1801, max: 2500 } },
+        { ...filtrosAbertos, mensalidadeMax: 1800 },
+      ),
+    ).toBe(false);
+    expect(
+      matchesFilters(
+        { ...cursoBase, mensalidade: { min: 1200, max: 2500 } },
+        { ...filtrosAbertos, mensalidadeMax: 1800 },
+      ),
+    ).toBe(true);
+    expect(
+      matchesFilters(
+        { ...cursoBase, mensalidade: null },
+        { ...filtrosAbertos, mensalidadeMax: 0 },
+      ),
+    ).toBe(true);
+    expect(
+      matchesFilters(
+        { ...cursoBase, mensalidade: { min: 0, max: 0 } },
         { ...filtrosAbertos, mensalidadeMax: 0 },
       ),
     ).toBe(true);
