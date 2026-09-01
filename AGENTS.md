@@ -160,6 +160,44 @@ chance". Mantenha a postura, inclusive no texto da interface.
 Um plano é a especificação completa da tarefa. Se estiver ambíguo ou
 contradisser o código, pare e reporte — não improvise.
 
+## Sessões
+
+Este arquivo e o `STATE.md` **são** o mecanismo de continuidade entre
+sessões. Se uma sessão nova não consegue retomar o trabalho lendo os dois, o
+que falta se escreve neles — não se resolve mantendo sessão viva.
+
+- **Codex: uma sessão por spec.** Lê o `AGENTS.md` e a spec, executa,
+  reporta, encerra. Nunca atravessa duas specs — o risco não é contexto
+  cheio, é lembrar de estrutura de árvore que mudou.
+- **Claude Code: uma sessão por ciclo de spec** — escrever, aguardar
+  execução, revisar. Entre specs diferentes, reset. A centena no nome do
+  arquivo marca o ciclo (ver `docs/tasks/README.md`).
+- **Resete agora** se um agente citar caminho ou comando que não existe,
+  reabrir decisão já registrada aqui, ou precisar da mesma correção duas
+  vezes.
+- O Codex roda com `memories = true` no `~/.codex/config.toml`, então
+  persiste memória por um canal fora destes documentos e fora da nossa
+  revisão. Se ele agir com base em algo que não está escrito aqui, é o
+  primeiro lugar para olhar.
+
+## Decisões descartadas
+
+Registradas para não serem reabertas a cada sessão. Alternativa recusada é
+tão durável quanto a escolhida — sem isso, cada agente novo repropõe a mesma
+coisa.
+
+- **Tailwind na migração** — o sistema de tokens atual funciona; reescrevê-lo
+  junto com o resto é risco sem ganho
+- **Migração incremental**, com as páginas antigas convivendo — não há
+  tráfego a preservar
+- **Diretório `src/`** — `app/` e `lib/` na raiz, para bater com o
+  `lib/recommendation/` especificado aqui
+- **Fixar Next 15.5** para manter o `next lint` — começaria a migração já
+  devendo uma atualização
+- **Pasta de logs como camada de contexto** — `AGENTS.md`, `STATE.md`,
+  `docs/tasks/` e o histórico do git já cobrem; um quarto lugar guardando
+  estado passado seria lido como vigente
+
 ## Skills — quem usa o quê
 
 Os dois agentes têm skills instaladas, algumas em comum. A divisão segue os

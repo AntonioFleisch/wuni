@@ -1,7 +1,14 @@
 # docs/tasks/
 
-Planos de tarefa pendentes. `NNN-slug.md`, numeração sequencial, nunca
-reaproveitada.
+Planos de tarefa pendentes. `NNN-slug.md`, número nunca reaproveitado.
+
+**A centena identifica o ciclo, que é uma sessão de trabalho.** Ciclo 1 →
+`001`, `002`, `003`. Ciclo 2 → `101`, `102`, `103`. Ciclo 3 → `201` em
+diante. Ao abrir sessão nova, vá para a próxima centena mesmo que a anterior
+tenha usado poucos números — eles são baratos, e o salto marca a fronteira.
+
+Como a spec é apagada ao ser revisada, a centena vira o índice do histórico:
+`git log -- "docs/tasks/1*.md"` devolve o ciclo 2 inteiro.
 
 **Esta pasta contém apenas trabalho ainda não feito.** A spec é apagada
 quando a revisão passa, no mesmo commit — depois que o que for durável nela
