@@ -25,19 +25,20 @@ export function calculateFit(curso: Curso, perfil: Perfil): number {
         : 0.25;
 
   let budgetFit: number;
-  if (curso.mensalidade === 0) {
+  if (curso.mensalidade === null) {
+    budgetFit = 0.6;
+  } else if (curso.mensalidade.max === 0) {
     budgetFit = 1;
-  } else if (curso.mensalidade <= perfil.orcamentoMensal) {
-    const slack =
-      perfil.orcamentoMensal > 0
-        ? curso.mensalidade / perfil.orcamentoMensal
-        : 1;
-    budgetFit = Math.max(0.7, 1 - slack * 0.3);
-  } else {
+  } else if (curso.mensalidade.max <= perfil.orcamentoMensal) {
+    budgetFit =
+      1 - 0.3 * (curso.mensalidade.max / perfil.orcamentoMensal);
+  } else if (curso.mensalidade.min > perfil.orcamentoMensal) {
     const over =
-      (curso.mensalidade - perfil.orcamentoMensal) /
+      (curso.mensalidade.min - perfil.orcamentoMensal) /
       Math.max(perfil.orcamentoMensal, 1);
-    budgetFit = Math.max(0, 1 - over);
+    budgetFit = 0.7 * Math.max(0, 1 - over);
+  } else {
+    budgetFit = 0.7;
   }
 
   const locationFit =
