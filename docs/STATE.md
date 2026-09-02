@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, revisão da 105 — tokens em `2aed101`,
-> tema, fontes e amostra em `129c55c`.
+> **Última verificação:** 2026-09-02, fechamento da 105 — tokens em `2aed101`,
+> tema, fontes e amostra em `129c55c`, verificação visual aprovada.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -74,28 +74,29 @@ TypeScript puro — `6f65c1f`, mais a correção da partição), **102**
 (mensalidade como faixa, saída do salário de egressos e `budgetFit` contínuo
 — `35ec681` a `fbdc3ab`), **103** (`db/seed/`, `server/cursos.ts`, fronteiras
 no lint e Prettier no portão — `1b13474` a `05884dc`), **104** (fronteira do
-perfil — `2cb4e74` a `f7b57b1`). Os 16 cursos do _seed_ foram conferidos campo
-a campo contra `js/data.js` na revisão, por script.
+perfil — `2cb4e74` a `f7b57b1`), **105** (tokens, tema, fontes e a amostra do
+sistema visual — `2aed101` e `129c55c`). Os 16 cursos do _seed_ foram
+conferidos campo a campo contra `js/data.js` na revisão, por script, e os 91
+tokens da 105 do mesmo jeito contra `css/style.css`.
 
 A partição da lista corta por **distância em pontos do maior fit**, padrão
 15, e não por proporção: o Fit Score varia entre 64 e 93 contra a base atual,
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-A **105 passou na revisão de código** — quatro portões rodados pelo revisor,
-os 91 tokens conferidos por script contra `css/style.css` valor por valor,
-uma única ocorrência de `dangerouslySetInnerHTML`. **Falta a verificação
-visual**, e a spec continua em `docs/tasks/` até ela acontecer. A proposta de
-CSS que a 105 aplicou foi confirmada pelo mantenedor em 2026-09-01: tokens em
-`app/globals.css`, CSS Modules por componente, sem Tailwind.
+A proposta de CSS que a 105 aplicou foi confirmada pelo mantenedor em
+2026-09-01: tokens em `app/globals.css`, CSS Modules por componente, sem
+Tailwind.
 
 **A 105 foi executada por uma sessão Claude, não pelo Codex** — a usagem dele
-acabou em 2026-09-01. A revisão fica com outra sessão, conforme _Papéis_ no
-`AGENTS.md`. A verificação visual continua sendo do mantenedor: nenhum dos
-dois agentes controla navegador, e esta é a primeira tarefa que renderiza
-alguma coisa.
+acabou em 2026-09-01, e a revisão ficou com outra sessão, conforme _Papéis_ no
+`AGENTS.md`. A sessão executora não tinha permissão para rodar `npm` nem
+`git`: entregou a árvore pronta, o revisor rodou os portões e commitou. Se o
+arranjo se repetir, libere `npm` para ela — executor que não verifica o
+próprio trabalho empurra para a revisão o que deveria morrer antes.
 
-Próxima tarefa: a **106** é a tela de recomendações — primeira página portada e
+Próxima tarefa: a **106**, ainda não especificada, é a tela de recomendações —
+primeira página portada e
 primeiro momento em que o motor aparece para o usuário, já com a seção
 colapsável das secundárias.
 
@@ -190,11 +191,15 @@ do _seed_ e `listarCursos()` em seis arquivos, com 73 testes. A 105 não
 acrescentou teste: componente de UI não exige teste unitário, conforme
 _Portões de qualidade_ no `AGENTS.md`.
 
-**A verificação visual da 105 está aberta.** É a primeira tarefa que renderiza
-interface, e nada dela foi visto em navegador: contraste nos dois temas,
-ausência de lampejo ao recarregar com tema escuro salvo, foco visível no
-`skip-link`, o `aria-pressed` acompanhando o tema e o comportamento em largura
-de telefone. `npm run dev` e a página inicial mostram tudo isso de uma vez.
+**A verificação visual da 105 foi feita pelo mantenedor em 2026-09-02** e
+aprovada: contraste nos dois temas, ausência de lampejo ao recarregar com tema
+escuro salvo, foco visível no `skip-link`, `aria-pressed` acompanhando o tema e
+o comportamento em largura de telefone.
+
+Continua valendo para toda tarefa que renderize: **nenhum dos agentes controla
+navegador**, então essa parte do critério de pronto é do mantenedor, e nenhuma
+página se declara pronta sem ela. `npm run dev` e a amostra em `/` mostram o
+sistema visual inteiro de uma vez, até a landing ser portada.
 
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
 no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são

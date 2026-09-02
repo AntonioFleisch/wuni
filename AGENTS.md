@@ -262,6 +262,16 @@ padrão sem ler esta linha.
 em `@media (prefers-color-scheme: dark)` e em `[data-theme="dark"]`. Ao
 adicionar um token, adicione nos três blocos.
 
+`color-scheme` acompanha os três — `light` no claro, `dark` nos dois escuros —
+e **não é cosmético**. O `ThemeToggle` descobre o tema em vez de recalculá-lo:
+lê `data-theme` quando estampado e, quando ausente, lê o `color-scheme`
+computado, que é a resposta que o `@media` já deu. Apagar essas três linhas
+não estraga só a barra de rolagem; faz o `aria-pressed` do botão mentir.
+
+Pela mesma razão, `matchMedia` está fora: ele refaz a pergunta que o CSS
+respondeu, e a preferência do sistema passa a ser interpretada em dois
+lugares que divergem com o tempo.
+
 Classes em **kebab-case no CSS global** (`skip-link`, `container`, `sr-only`)
 e em **camelCase dentro de CSS Modules** (`styles.recCard`), sempre nomeadas
 por componente. A divisão é por mecanismo, não por gosto: kebab-case num
@@ -424,6 +434,10 @@ coisa.
   `lib/recommendation/` especificado aqui
 - **Fixar Next 15.5** para manter o `next lint` — começaria a migração já
   devendo uma atualização
+- **`light-dark()` para acabar com a duplicação dos blocos escuros** — a
+  função resolveria, mas onde o navegador não a suporta a declaração inteira
+  é inválida e o token some: falha dura, não degradação. O público é
+  adolescente em telefone que pode estar velho
 - **Pasta de logs como camada de contexto** — `AGENTS.md`, `STATE.md`,
   `docs/tasks/` e o histórico do git já cobrem; um quarto lugar guardando
   estado passado seria lido como vigente

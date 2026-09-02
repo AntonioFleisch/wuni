@@ -1,64 +1,75 @@
-# BRIEFING — partida do ciclo 2
+# BRIEFING — partida do ciclo 3
 
 > Handoff do ciclo anterior. **Sobrescrito a cada ciclo**, não acumula.
 > Leia `AGENTS.md` e `docs/STATE.md` primeiro; em qualquer contradição, eles
-> vencem. Escrito ao fechar o ciclo 1, no commit `ecb9564`.
+> vencem. Escrito ao fechar o ciclo 2, em 2026-09-02.
 
 ## Onde paramos
 
-Ciclo 1 entregou duas specs, ambas revisadas e aprovadas:
+Ciclo 2 entregou cinco specs, todas revisadas e aprovadas: **101** motor de
+recomendação em TypeScript puro, **102** mensalidade como faixa, **103**
+`db/seed/` e `server/`, **104** fronteira do perfil, **105** tokens e tema.
 
-- **001** — marca normalizada para "Wuni" e chave de tema da landing
-  corrigida. Eram o mesmo defeito: o erro de grafia estava na chave do
-  `localStorage`.
-- **002** — scaffold do Next 16 com App Router, TypeScript `strict`, ESLint,
-  Prettier e Vitest.
+O repositório saiu de scaffold vazio para quatro camadas verificadas —
+`lib/`, `db/`, `server/`, `components/` — com 73 testes, direção de
+dependência checada pelo lint e o sistema visual portado. **Nenhuma página de
+produto existe ainda.** O que está em `/` é amostra temporária dos tokens, e
+sai com a landing.
 
-O repositório deixou de ser site estático. Os quatro portões de qualidade
-(`typecheck`, `lint`, `test`, `build`) são executáveis e passam. O site
-legado continua no repositório como fonte para o porte; nenhuma página do
-produto foi portada, e não há banco nem autenticação.
-
-`docs/tasks/` está vazio de specs — só o README. Próxima numeração: **101**.
+`docs/tasks/` está vazio de specs. Próxima numeração: **201**.
 
 ## O que está travado
 
-**Confirmação de ORM, auth e CSS.** As três propostas estão no `AGENTS.md`
-(Prisma, Auth.js com Google, tokens em `globals.css` com CSS Modules e sem
-Tailwind) e seguem pendentes de decisão do mantenedor. Portar qualquer
-página depende da de CSS.
+**Onde fica o banco.** O mantenedor adiou explicitamente, e sem isso não
+andam a modelagem do esquema nem a ingestão do SiSU — que é a primeira fonte
+real e a única que traz nota de corte. ORM e auth seguem adiados junto;
+Clerk entrou como alternativa ao Auth.js.
+
+Nada disso trava a próxima spec, e é por isso que ela é uma tela.
 
 ## O que fazer primeiro
 
-Recomendo **101 = portar o motor de recomendação** para `lib/recommendation/`
-como TypeScript puro, com testes.
+Recomendo **201 = portar a tela de recomendações**.
 
-A razão é destravamento: o motor não depende de CSS, ORM nem auth, então é o
-único trabalho de peso que anda sem as decisões pendentes. É também o código
-de maior risco do produto — bug ali gera recomendação errada em silêncio — e
-o `AGENTS.md` já exige teste unitário com casos de fronteira para ele. De
-quebra, remove o teste de fumaça temporário do `lib/smoke.test.ts`.
+É o único trabalho grande que anda sem as decisões pendentes: motor, dados,
+perfil e tokens já existem, e `listarCursos()` já nasceu `async` justamente
+para o banco entrar depois sem reescrever consumidor. É também o primeiro
+momento desde o início da migração em que o produto volta a existir para o
+usuário — e onde a decisão de _perfil pesa, não corta_ aparece na tela, na
+seção colapsável das secundárias.
 
-**Antes de escrever a 101, resolva com o mantenedor o bug 1 do `STATE.md`**:
-`js/recommendations.js:184` filtra por `profile.interesses` além de o Fit
-Score já penalizar isso com peso, o que esconde cursos adjacentes do usuário
-e mata o ramo `courseMatch = 0.25`. É decisão de regra de negócio, não de
-código. Portar o motor sem resolver isso replica o defeito no código novo.
+**Antes de escrever a 201, resolva duas coisas com o mantenedor:**
+
+1. **De onde a tela lê o perfil nesta fase.** Só existe `localStorage`, e o
+   parser da 104 já trata isso — mas ler `localStorage` obriga componente de
+   cliente, o que muda o desenho da página inteira.
+2. **Filtros em `searchParams` ou em estado de cliente.** Recomendo
+   `searchParams`: a URL vira compartilhável, a página continua renderizando
+   no servidor e o filtro sobrevive ao recarregar. Estado de cliente é mais
+   simples de escrever e perde as três coisas.
 
 ## Carrego junto
 
-Pendência pequena, para entrar na 101 em vez de virar spec própria: os 16
-warnings do lint são falsos positivos em `js/*.js` — o ESLint lê como módulos
-o que é escopo global. `js/**` no `globalIgnores` do `eslint.config.mjs`
-resolve. Detalhe e motivo no `STATE.md`.
+- A verificação visual é **sempre** do mantenedor. Nenhum agente controla
+  navegador, e nenhuma página se declara pronta sem essa passada.
+- Se uma sessão Claude for executar de novo, **libere `npm` e `git` para
+  ela**. Na 105 ela entregou sem conseguir rodar um portão, e coisa que
+  deveria morrer na execução chegou à revisão.
+- `app/page.tsx` é amostra temporária. Não trate como página de produto e não
+  construa em cima dela.
 
 ## Como trabalhamos
 
-- Claude planeja e revisa; Codex executa. Claude não implementa sem pedido.
-- Specs proporcionais ao diff. Critério de pronto separa o que o Codex
-  verifica do que fica para a revisão — ele não controla navegador.
+- Claude planeja e revisa; o executor executa. **O papel vale mais que a
+  ferramenta** — sessão Claude pode executar quando o mantenedor pede, e aí
+  segue a disciplina do executor.
+- **Quem executou não revisa.** A revisão é de outra sessão.
+- **Spec entregue não se edita em silêncio.** Mudou depois do handoff? Avise,
+  ou trate a diferença como correção — não reprove o que foi executado certo.
+- Specs proporcionais ao diff. Critério de pronto separa o que o executor
+  verifica do que fica para a revisão.
 - Spec é apagada no commit da revisão, depois de colher o durável.
 - Claude commita a documentação sozinho, sem pedir — mas **não** enquanto o
-  Codex estiver executando, para não mover a base de comparação dele.
+  executor estiver trabalhando, para não mover a base dele.
 - Claude encerra a resposta com "tudo pronto para o codex" quando a spec está
   pronta para execução.
