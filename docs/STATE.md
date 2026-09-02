@@ -55,6 +55,12 @@ Router, especificada em `docs/tasks/`. A proposta de CSS foi confirmada pelo
 mantenedor em 2026-09-01: tokens em `app/globals.css`, CSS Modules por
 componente, sem Tailwind.
 
+**A 105 é executada por uma sessão Claude, não pelo Codex** — a usagem dele
+acabou em 2026-09-01. A revisão fica com outra sessão, conforme _Papéis_ no
+`AGENTS.md`. A verificação visual continua sendo do mantenedor: nenhum dos
+dois agentes controla navegador, e esta é a primeira tarefa que renderiza
+alguma coisa.
+
 Depois dela, a **106** é a tela de recomendações — primeira página portada e
 primeiro momento em que o motor aparece para o usuário, já com a seção
 colapsável das secundárias.

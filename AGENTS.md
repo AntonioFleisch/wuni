@@ -359,6 +359,19 @@ acima é sobre o perfil, não sobre os controles da interface.
 Um plano é a especificação completa da tarefa. Se estiver ambíguo ou
 contradisser o código, pare e reporte — não improvise.
 
+**O papel vale mais que a ferramenta.** Quando o mantenedor pede, uma sessão
+Claude executa uma spec — e aí ela segue a disciplina do executor, não a do
+autor: cumpre a spec como está escrita, para e reporta na primeira
+ambiguidade em vez de resolver com o que imagina que o autor quis dizer, e
+não toca em `AGENTS.md`, em `docs/STATE.md` fora do que a spec mandar, nem
+apaga a spec.
+
+A regra que não se quebra: **quem executou não revisa.** A revisão é de outra
+sessão, que não participou da execução. Foi assim que os dois erros de spec
+do ciclo 2 apareceram — alguém teve que transformar as palavras em código e
+travou. Autor revisando a própria execução perde exatamente esse mecanismo,
+porque ambiguidade vira suposição silenciosa em vez de pergunta.
+
 ## Sessões
 
 Este arquivo e o `STATE.md` **são** o mecanismo de continuidade entre
