@@ -166,6 +166,26 @@ consumidor depois, e "todo consumidor" inclui as páginas.
 Não existe pasta `utils/`. Código sem dono vai para o módulo do domínio a que
 serve.
 
+### A fronteira do perfil
+
+`lib/perfil/` é onde dado incompleto vira perfil válido, e `PerfilAluno`
+**estende** o `Perfil` do motor — o compilador garante que todo perfil
+completo serve ao `calculateFit`. A seta é só nessa direção: o motor não
+importa perfil.
+
+Três regras que valem além do parser:
+
+- **Falta de informação não ativa restrição.** `aceitaMorarFora` ausente vira
+  `true`, nunca `false`. É o único campo do perfil que ainda corta cursos; se
+  um campo em branco ligasse o corte, dado incompleto esconderia faculdades
+  sem o aluno ter pedido. Mesma família do defeito que a 101 corrigiu.
+- **Ausência legítima não é correção.** O parser devolve a lista de campos
+  que ele substituiu, e campo cujo tipo já admite "não informado" só entra
+  quando está presente e inválido. Lista que grita em perfil normal não é
+  lida em perfil quebrado.
+- **`lib/` não lê o navegador.** O parser recebe texto, não `localStorage`.
+  Quem lê a chave é a tela.
+
 ### Escolhas de implementação — proposta, pendente de revisão
 
 Adote apenas depois que o mantenedor confirmar:

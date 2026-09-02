@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, execução da 104 sobre o commit
-> `12f1b72`.
+> **Última verificação:** 2026-09-01, revisão da 104 sobre o commit
+> `f7b57b1`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -41,16 +41,24 @@ Concluídas e revisadas: **001** (marca "Wuni" e chave de tema da landing),
 TypeScript puro — `6f65c1f`, mais a correção da partição), **102**
 (mensalidade como faixa, saída do salário de egressos e `budgetFit` contínuo
 — `35ec681` a `fbdc3ab`), **103** (`db/seed/`, `server/cursos.ts`, fronteiras
-no lint e Prettier no portão — `1b13474` a `05884dc`). Os 16 cursos do _seed_
-foram conferidos campo a campo contra `js/data.js` na revisão, por script.
+no lint e Prettier no portão — `1b13474` a `05884dc`), **104** (fronteira do
+perfil — `2cb4e74` a `f7b57b1`). Os 16 cursos do _seed_ foram conferidos campo
+a campo contra `js/data.js` na revisão, por script.
 
 A partição da lista corta por **distância em pontos do maior fit**, padrão
 15, e não por proporção: o Fit Score varia entre 64 e 93 contra a base atual,
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Aguardando revisão: **104** — perfil completo, parser tolerante do JSON legado,
-serialização e 25 testes unitários (`2cb4e74` a `12f1b72`).
+**Nenhuma tarefa está especificada, e a próxima depende de decisão.** O que
+falta para a primeira tela existir é o sistema visual: portar os design tokens
+e o tema claro/escuro para `app/globals.css`. Isso trava em _Decisões
+pendentes_ — o CSS é a única das três propostas do `AGENTS.md` que ainda
+bloqueia trabalho.
+
+Confirmada a proposta de CSS, a ordem sugerida é: **105** tokens e tema, e
+**106** a tela de recomendações, primeira página portada e primeiro momento
+em que o motor aparece para o usuário, já com a seção colapsável.
 
 ### Estratégia de migração — decidida
 
@@ -134,7 +142,7 @@ npm run build
 ```
 
 O Vitest cobre o motor de recomendação, a fronteira do perfil, as invariantes
-do _seed_ e `listarCursos()` em seis arquivos, com 72 testes. A verificação
+do _seed_ e `listarCursos()` em seis arquivos, com 73 testes. A verificação
 visual continua a cargo da revisão; a 104 não renderiza interface.
 
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
@@ -166,6 +174,14 @@ declara sua lista:
 Um arquivo novo precisa entrar na lista de cada página que o usa, na posição
 correta da ordem de dependência. `main.js` roda em todas as páginas e assume
 que `#year`, `#nav-toggle` e `#main-nav` existem.
+
+**O legado grava orçamento em branco como `0`.** `js/profile.js` faz
+`Number(valor) || 0`, então "não informei" e "não posso pagar nada" viram o
+mesmo dado, e a informação se perdeu na gravação. O parser da 104 trata `0`
+como escolha explícita — e é o certo, porque orçamento zero é uma resposta
+real, que o `budgetFit` honra zerando todo curso pago. Mas perfis antigos
+podem chegar com zero por omissão, e quem desenhar a tela de importação
+precisa contar com isso.
 
 Chaves de `localStorage` em uso: `wuni_profile` (perfil), `wuni-theme` (tema).
 Os separadores são inconsistentes — sublinhado num, hífen no outro — e isso
