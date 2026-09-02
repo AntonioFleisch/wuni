@@ -1,0 +1,604 @@
+.themeToggleRow {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 16px;
+}
+
+.pageHero {
+  padding: 56px 0 40px;
+  background:
+    radial-gradient(
+      1000px 400px at 85% -10%,
+      rgba(28, 63, 194, 0.1),
+      transparent 60%
+    ),
+    var(--bg-canvas);
+  border-bottom: 1px solid var(--border);
+}
+
+.pageHero .kicker {
+  margin-bottom: 10px;
+}
+
+.pageHero h1 {
+  margin-bottom: 10px;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+.pageHero p {
+  max-width: 62ch;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.appShell {
+  padding: 48px 0 96px;
+}
+
+.kicker {
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.btnGhost {
+  color: var(--ink-900);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.btnGhost:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.btnSm {
+  padding: 9px 18px;
+  font-size: 0.86rem;
+}
+
+.summaryStrip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.summaryPill {
+  flex: 1 1 160px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.summaryPill b {
+  display: block;
+  font-family: var(--font-sora), var(--font-inter), sans-serif;
+  font-size: 1.4rem;
+}
+
+.summaryPill span {
+  color: var(--ink-500);
+  font-size: 0.8rem;
+}
+
+.summaryPill.pillGreen b {
+  color: var(--success-text);
+}
+
+.summaryPill.pillYellow b {
+  color: var(--warning-text);
+}
+
+.summaryPill.pillRed b {
+  color: var(--danger-text);
+}
+
+.disclaimerNote {
+  margin-bottom: 24px;
+  padding: 10px 14px;
+  color: var(--ink-500);
+  background: var(--bg-alt);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+}
+
+.recLayout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  align-items: start;
+  gap: 32px;
+}
+
+.filterPanel {
+  position: sticky;
+  top: 88px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.filterPanelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterPanelHead h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filterGroup > label {
+  color: var(--ink-500);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.filterGroup input[type="text"] {
+  padding: 10px 14px;
+  color: var(--ink-900);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+}
+
+.filterDivider {
+  height: 1px;
+  margin: 0;
+  background: var(--border);
+  border: none;
+}
+
+.chipSelect {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chipToggle {
+  padding: 9px 16px;
+  color: var(--ink-700);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chipToggle:hover {
+  border-color: var(--accent);
+}
+
+.chipToggle.active {
+  color: #fff;
+  background: var(--accent-fill);
+  border-color: var(--accent-fill);
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.toggleRow:first-of-type {
+  border-top: none;
+}
+
+.toggleRow .toggleLabel {
+  color: var(--ink-900);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+
+.toggleRow .toggleSub {
+  margin-top: 2px;
+  color: var(--ink-500);
+  font-size: 0.8rem;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 44px;
+  height: 26px;
+}
+
+.switch input {
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+
+.switchTrack {
+  position: absolute;
+  inset: 0;
+  background: var(--ink-300);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.switchTrack::before {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.15s ease;
+  content: "";
+}
+
+.switch input:checked + .switchTrack {
+  background: var(--accent-fill);
+}
+
+.switch input:checked + .switchTrack::before {
+  transform: translateX(18px);
+}
+
+.switch input:focus-visible + .switchTrack {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rangeField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rangeFieldHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.rangeFieldHead span:last-child {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.rangeField input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent-fill);
+}
+
+.fieldHelp {
+  color: var(--ink-500);
+  font-size: 0.76rem;
+}
+
+.resultsColumn {
+  min-width: 0;
+}
+
+.resultsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.resultsCount {
+  color: var(--ink-700);
+  font-size: 0.92rem;
+}
+
+.resultsCount strong {
+  color: var(--ink-900);
+}
+
+.resultsSort {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.86rem;
+}
+
+.resultsSort select {
+  padding: 8px 12px;
+  color: var(--ink-900);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.86rem;
+}
+
+.profileNotice {
+  margin-bottom: 18px;
+  padding: 10px 14px;
+  color: var(--ink-700);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+}
+
+.recGrid {
+  display: grid;
+  gap: 18px;
+}
+
+.recCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.recCardMain {
+  min-width: 0;
+}
+
+.recCardBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.badgePublic {
+  color: var(--tag-blue-text);
+  background: var(--tag-blue-bg);
+}
+
+.badgePrivate {
+  color: var(--tag-orange-text);
+  background: var(--tag-orange-bg);
+}
+
+.badgeScholarship {
+  color: var(--success-text);
+  background: var(--tag-green-bg);
+}
+
+.badgeMec {
+  color: var(--tag-purple-text);
+  background: var(--tag-purple-bg);
+}
+
+.tag {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.tagGreen {
+  color: var(--success-text);
+  background: var(--tag-green-bg);
+}
+
+.tagYellow {
+  color: var(--warning-text);
+  background: var(--tag-yellow-bg);
+}
+
+.tagRed {
+  color: var(--danger-text);
+  background: var(--tag-red-bg);
+}
+
+.recCard h3 {
+  margin-bottom: 2px;
+  font-size: 1.08rem;
+}
+
+.recCard .recInstitution {
+  margin-bottom: 2px;
+  color: var(--ink-700);
+  font-size: 0.9rem;
+}
+
+.recCard .recLocation {
+  margin-bottom: 14px;
+  color: var(--ink-500);
+  font-size: 0.82rem;
+}
+
+.recStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.recStat span {
+  display: block;
+  color: var(--ink-500);
+  font-size: 0.74rem;
+}
+
+.recStat b {
+  display: block;
+  color: var(--ink-900);
+  font-size: 0.92rem;
+}
+
+.recChipRows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.recChipRow span.label {
+  min-width: 76px;
+  color: var(--ink-500);
+  font-size: 0.76rem;
+}
+
+.recMiniChip {
+  padding: 3px 9px;
+  color: var(--ink-700);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.74rem;
+}
+
+.recCardSide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  min-width: 108px;
+}
+
+.recFitscore {
+  width: 100%;
+  padding: 14px 16px;
+  color: #fff;
+  text-align: center;
+  background: var(--navy-900);
+  border-radius: var(--radius-md);
+}
+
+.recFitscore b {
+  display: block;
+  color: var(--amber-500);
+  font-family: var(--font-sora), var(--font-inter), sans-serif;
+  font-size: 1.5rem;
+}
+
+.recFitscore span {
+  color: #9fb1e0;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.secondarySection {
+  margin-top: 24px;
+}
+
+.secondarySummary {
+  padding: 14px 16px;
+  color: var(--ink-700);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.secondarySummary::marker {
+  color: var(--accent);
+}
+
+.secondarySummary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.secondarySection[open] > .secondarySummary {
+  margin-bottom: 18px;
+}
+
+.emptyState {
+  padding: 64px 24px;
+  color: var(--ink-500);
+  text-align: center;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+}
+
+@media (max-width: 960px) {
+  .recLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .filterPanel {
+    position: static;
+  }
+
+  .recStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .recCard {
+    grid-template-columns: 1fr;
+  }
+
+  .recCardSide {
+    flex-direction: row;
+  }
+
+  .recFitscore {
+    flex: 1;
+    width: auto;
+  }
+}
