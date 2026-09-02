@@ -53,9 +53,10 @@ function pertenceAUniao<T extends string>(
   return typeof value === "string" && valores.includes(value as T);
 }
 
-function normalizarListaStrings(
-  value: unknown,
-): { valor: string[]; corrigido: boolean } {
+function normalizarListaStrings(value: unknown): {
+  valor: string[];
+  corrigido: boolean;
+} {
   if (!Array.isArray(value)) {
     return { valor: [], corrigido: true };
   }
@@ -94,10 +95,7 @@ function normalizarListaUniao<T extends string>(
   return { valor, corrigido: valor.length !== value.length };
 }
 
-function normalizarEnem(
-  value: unknown,
-  camposCorrigidos: string[],
-): NotasEnem {
+function normalizarEnem(value: unknown, camposCorrigidos: string[]): NotasEnem {
   const origem = isRecord(value) ? value : {};
   const enem: NotasEnem = {};
 
@@ -133,9 +131,7 @@ export function perfilVazio(): PerfilAluno {
   };
 }
 
-export function parsePerfilArmazenado(
-  raw: string | null,
-): ResultadoPerfil {
+export function parsePerfilArmazenado(raw: string | null): ResultadoPerfil {
   if (raw === null || raw.trim() === "") {
     return { estado: "ausente" };
   }
@@ -238,10 +234,7 @@ export function parsePerfilArmazenado(
     camposCorrigidos.push("turno");
   }
 
-  const modalidade = normalizarListaUniao(
-    armazenado.modalidade,
-    MODALIDADES,
-  );
+  const modalidade = normalizarListaUniao(armazenado.modalidade, MODALIDADES);
   perfil.modalidade = modalidade.valor;
   if (modalidade.corrigido) {
     camposCorrigidos.push("modalidade");

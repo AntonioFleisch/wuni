@@ -3,11 +3,7 @@ import type { Perfil } from "../recommendation";
 export type AnoEscola = "1º ano" | "2º ano" | "3º ano" | "Concluinte";
 
 export type RendaPerCapita =
-  | "ate-1-sm"
-  | "de-1-a-2-sm"
-  | "de-2-a-3-sm"
-  | "de-3-a-5-sm"
-  | "acima-5-sm";
+  "ate-1-sm" | "de-1-a-2-sm" | "de-2-a-3-sm" | "de-3-a-5-sm" | "acima-5-sm";
 
 export interface PerfilAluno extends Perfil {
   nome: string;
