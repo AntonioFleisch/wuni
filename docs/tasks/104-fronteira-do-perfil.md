@@ -111,6 +111,23 @@ entra por padrão é indistinguível de dado real do aluno.
 Campo desconhecido no JSON armazenado é ignorado sem erro: perfil gravado por
 versão antiga do site precisa continuar sendo aproveitável.
 
+**Ausência legítima não é correção.** `camposCorrigidos` só registra campo
+que o parser **substituiu**. Os dois campos cujo tipo já admite "não
+informado" — `mediaHistorico`, que é `number | null`, e cada nota do ENEM,
+que é opcional — entram na lista apenas quando estão **presentes e
+inválidos**, nunca quando estão ausentes ou `null`.
+
+Não é sutileza de tipo: o formulário legado grava `mediaHistorico: null`
+toda vez que o aluno deixa a média em branco, e aluno de 2º ano costuma não
+ter nota de ENEM. Reportar isso como correção faria a tela de importação
+dizer que consertou seis campos num perfil onde nada foi consertado, e a
+lista deixaria de significar alguma coisa exatamente no caso mais comum.
+
+Os demais campos são obrigatórios e têm padrão de verdade: ausência ali é
+substituição, e o aluno tem o direito de saber. `interesses: []` ausente vira
+"não declarou interesse nenhum", que muda o `courseMatch` — é correção e
+entra na lista.
+
 Três linhas dessa tabela são decisões, não detalhes:
 
 **`aceitaMorarFora` ausente vira `true`, não `false`.** É o único campo do
@@ -160,8 +177,11 @@ Além de uma cobertura por função exportada:
 
 - `raw` `null`, `""` e só espaços → `ausente`
 - `"{"`, `"[]"`, `"42"`, `'"texto"'`, `"null"` → `invalido`
-- objeto vazio `"{}"` → `ok`, com perfil neutro e **todos** os campos
-  obrigatórios listados em `camposCorrigidos`
+- objeto vazio `"{}"` → `ok`, com perfil neutro e os campos **obrigatórios**
+  listados em `camposCorrigidos` — sem `mediaHistorico` e sem as cinco
+  `enem.*`, que estavam legitimamente ausentes
+- perfil como o formulário legado grava com a média em branco
+  (`mediaHistorico: null`, resto preenchido) → `camposCorrigidos` **vazio**
 - o `DEFAULT_PROFILE` do legado, copiado como literal para o teste, atravessa
   o parser sem nenhuma correção e sai idêntico no que importa
 - `aceitaMorarFora` ausente sai `true`; `false` explícito sobrevive como
