@@ -197,10 +197,12 @@ Adote apenas depois que o mantenedor confirmar:
   O público é adolescente; conta Google é o que eles já têm. **O mantenedor
   considera Clerk como alternativa** — decisão adiada; nenhuma spec depende
   dela por enquanto.
-- **CSS:** portar os design tokens e o sistema de tema claro/escuro atuais
-  para `globals.css`, e usar CSS Modules por componente. **Não** adotar
-  Tailwind na migração — o sistema visual existente funciona, reescrevê-lo
-  junto com tudo o mais é risco sem ganho.
+- **CSS: confirmado pelo mantenedor em 2026-09-01.** Portar os design tokens
+  e o sistema de tema claro/escuro atuais para `app/globals.css`, e usar CSS
+  Modules por componente. **Não** adotar Tailwind na migração — o sistema
+  visual existente funciona, reescrevê-lo junto com tudo o mais é risco sem
+  ganho. `globals.css` recebe token, reset e tipografia base; classe de
+  componente nunca entra ali, ou ele vira o `style.css` de novo.
 - **Perfis existentes:** no primeiro login, oferecer importar o perfil que
   estiver no `localStorage` daquele navegador.
 
@@ -249,13 +251,22 @@ por padrão.
 sanitização explícita. Passa a importar de verdade quando os dados de cursos
 vierem do banco.
 
+Existe **uma** exceção autorizada, em `app/layout.tsx`: o script inline que
+estampa `data-theme` antes da primeira pintura, sem o qual quem escolheu tema
+escuro vê lampejo branco a cada navegação. Ela vale enquanto o conteúdo for
+constante literal, sem nenhuma interpolação, e fizer só isso. Qualquer outro
+uso é defeito, e um segundo uso no repositório é sinal de que alguém copiou o
+padrão sem ler esta linha.
+
 **CSS.** Design tokens em `:root`. O tema escuro é declarado **duas vezes**:
 em `@media (prefers-color-scheme: dark)` e em `[data-theme="dark"]`. Ao
 adicionar um token, adicione nos três blocos. Classes em kebab-case, nomeadas
 por componente (`rec-card`, `chip-toggle`).
 
-**Acessibilidade.** `skip-link`, `aria-expanded` no menu e no toggle de tema,
-e o contraste dos tokens já existem. Devem chegar inteiros do outro lado da
+**Acessibilidade.** `skip-link`, `aria-expanded` no menu, `aria-pressed` no
+toggle de tema — botão de alternância não é revelação de conteúdo, e este
+arquivo dizia `aria-expanded` nos dois até 2026-09-01 —, e o contraste dos
+tokens já existem. Devem chegar inteiros do outro lado da
 migração. Não regrida.
 
 **Commits.** Mensagens curtas em minúscula. Sem convenção de prefixo.

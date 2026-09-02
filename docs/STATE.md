@@ -50,15 +50,14 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-**Nenhuma tarefa está especificada, e a próxima depende de decisão.** O que
-falta para a primeira tela existir é o sistema visual: portar os design tokens
-e o tema claro/escuro para `app/globals.css`. Isso trava em _Decisões
-pendentes_ — o CSS é a única das três propostas do `AGENTS.md` que ainda
-bloqueia trabalho.
+Próxima tarefa: **105** — tokens, tema claro/escuro e base tipográfica no App
+Router, especificada em `docs/tasks/`. A proposta de CSS foi confirmada pelo
+mantenedor em 2026-09-01: tokens em `app/globals.css`, CSS Modules por
+componente, sem Tailwind.
 
-Confirmada a proposta de CSS, a ordem sugerida é: **105** tokens e tema, e
-**106** a tela de recomendações, primeira página portada e primeiro momento
-em que o motor aparece para o usuário, já com a seção colapsável.
+Depois dela, a **106** é a tela de recomendações — primeira página portada e
+primeiro momento em que o motor aparece para o usuário, já com a seção
+colapsável das secundárias.
 
 ### Estratégia de migração — decidida
 
@@ -239,10 +238,9 @@ tarefa 001 (`7c5329f`, `6ff81bf`).
 
 Se uma tarefa depender de uma delas, pare e pergunte ao mantenedor:
 
-- **CSS:** confirmação da proposta do `AGENTS.md` (tokens em `globals.css` +
-  CSS Modules, sem Tailwind). Trava o porte de qualquer página.
 - **ORM e auth:** adiados pelo mantenedor em 2026-09-01 — nenhuma spec do
   ciclo 2 depende deles. Em auth, Clerk entrou como alternativa ao Auth.js.
+  O CSS saiu desta lista: foi confirmado em 2026-09-01 e está no `AGENTS.md`.
 - **Origem dos dados de cursos:** curadoria manual no banco ou ingestão de
   bases oficiais (Censo INEP, notas de corte SiSU, cadastro e-MEC). Muda o
   esquema e obriga a tratar licença e atribuição das fontes.
