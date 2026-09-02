@@ -3,8 +3,8 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, revisão da 103 sobre o commit
-> `05884dc`.
+> **Última verificação:** 2026-09-01, execução da 104 sobre o commit
+> `12f1b72`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
@@ -23,6 +23,12 @@ No modelo do motor, mensalidade é uma faixa `{ min, max } | null`: zero é
 gratuito e `null` é dado desconhecido. O salário médio de egressos e seu
 critério de ordenação foram removidos. O `budgetFit` agora é contínuo na
 fronteira do orçamento e usa o pior caso aplicável da faixa.
+
+`lib/perfil/` já define o perfil completo do aluno e a fronteira pura que
+normaliza o JSON legado antes de entregá-lo ao motor. O parser distingue perfil
+ausente de inválido, informa os campos corrigidos e não acessa APIs do
+navegador. A mesma API serializa o perfil para a futura tela e importação no
+primeiro login.
 
 Os arquivos estáticos continuam no repositório como fonte para as próximas
 specs, mas não foram integrados ao App Router. `server/cursos.ts` já expõe a
@@ -43,11 +49,8 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **104** — `lib/perfil/` com o tipo do perfil completo e o
-parser tolerante do que vem do `localStorage`, especificada em `docs/tasks/`.
-É a fronteira que normaliza dado incompleto antes de o motor vê-lo, e que
-vira o importador do primeiro login. Com ela pronta, a primeira tela passa a
-ser portável assim que o CSS for confirmado.
+Aguardando revisão: **104** — perfil completo, parser tolerante do JSON legado,
+serialização e 25 testes unitários (`2cb4e74` a `12f1b72`).
 
 ### Estratégia de migração — decidida
 
@@ -83,6 +86,7 @@ Nome do produto: **Wuni**.
 app/                    App Router; página padrão do scaffold
 db/seed/                seed tipado dos 16 cursos e testes de invariantes
 lib/recommendation/     motor TypeScript puro e seus testes unitários
+lib/perfil/             perfil completo, parser e serialização do dado legado
 server/                 casos de uso; listarCursos() em memória e seus testes
 public/                 assets padrão do scaffold
 index.html              landing institucional
@@ -129,9 +133,9 @@ npm run test
 npm run build
 ```
 
-O Vitest cobre o motor de recomendação, as invariantes do _seed_ e
-`listarCursos()` em cinco arquivos, com 47 testes. A verificação visual
-continua a cargo da revisão; a 103 não renderiza interface.
+O Vitest cobre o motor de recomendação, a fronteira do perfil, as invariantes
+do _seed_ e `listarCursos()` em seis arquivos, com 72 testes. A verificação
+visual continua a cargo da revisão; a 104 não renderiza interface.
 
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
 no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são
