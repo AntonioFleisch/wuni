@@ -79,7 +79,7 @@ porque o HTML chega do servidor sem saber a preferência. O legado já resolve
 isso com um script inline no `<head>` (ver `recomendacoes.html`), e o porte
 faz o mesmo em `app/layout.tsx`.
 
-Isso exige `dangerouslySetInnerHTML`, que as *Convenções* do `AGENTS.md`
+Isso exige `dangerouslySetInnerHTML`, que as _Convenções_ do `AGENTS.md`
 proíbem sem sanitização. **Está autorizado aqui, e só aqui**, sob três
 condições que fazem parte do critério de pronto:
 
@@ -95,12 +95,34 @@ precisa de `suppressHydrationWarning`.
 
 ### O toggle não decide o tema inicial
 
-O script inline é a **única** fonte da decisão inicial. O componente de
-toggle não repete essa lógica: depois de montar, ele lê o que já está
-estampado em `data-theme` e passa a alternar a partir dali.
+**O toggle nunca recalcula qual deveria ser o tema.** Ele descobre qual é, e
+alterna a partir dali. No legado essa decisão existe em dois lugares — o
+script inline e o `main.js` — e duas cópias da mesma regra divergem.
 
-No legado essa decisão existe em dois lugares — o script inline e o
-`main.js` — e duas cópias da mesma regra divergem. Aqui existe uma só.
+Descobrir tem dois casos, porque o tema inicial tem duas origens legítimas:
+
+1. **`data-theme` presente** — o aluno já escolheu, o script inline estampou.
+   O toggle lê o atributo.
+2. **`data-theme` ausente** — o aluno nunca escolheu, e quem decidiu foi o
+   `@media (prefers-color-scheme: dark)`. O toggle lê o resultado dessa
+   decisão em
+   `getComputedStyle(document.documentElement).colorScheme`, que devolve
+   `"dark"` ou `"light"`. Valor vazio ou desconhecido conta como `"light"`.
+
+**Não use `matchMedia` para isso.** Ele recalcularia a mesma regra que o CSS
+já resolveu, e aí a preferência do sistema passaria a ser interpretada em
+dois lugares — exatamente o defeito que estamos evitando. `getComputedStyle`
+lê a resposta; `matchMedia` faz a pergunta de novo.
+
+Isso torna o `color-scheme` da seção anterior **dependência funcional do
+toggle**, não enfeite: sem ele o valor computado não diz nada e o botão passa
+a errar o estado. Registre isso num comentário curto, tanto no CSS quanto no
+componente — quem for "limpar" um dos dois precisa esbarrar no outro.
+
+Consequência: um aluno que nunca escolheu tema continua seguindo o sistema
+operacional, inclusive quando ele muda. Nada é estampado até o primeiro
+clique, e é assim que deve ser — estampar por conta própria congelaria uma
+preferência que o aluno não expressou.
 
 Consequência a respeitar: no servidor não há como saber o tema, então o botão
 não pode renderizar `aria-pressed` com um palpite. Renderize sem o estado e
@@ -159,6 +181,15 @@ decisão de adotar biblioteca não é de uma tarefa de porte.
 navegador em tema claro e escuro, e em largura de desktop e de telefone;
 conferir contraste, ausência de lampejo ao recarregar com tema escuro salvo,
 foco visível no `skip-link`, e o `aria-pressed` mudando junto com o tema.
+
+Os três estados iniciais que a revisão vai percorrer, e que o componente
+precisa acertar — vale conferi-los ao ler o próprio código:
+
+1. `wuni-theme` ausente e sistema no escuro → página escura, `aria-pressed`
+   verdadeiro, e o primeiro clique leva para o claro.
+2. `wuni-theme` ausente e sistema no claro → página clara, `aria-pressed`
+   falso, primeiro clique leva para o escuro.
+3. `wuni-theme` salvo contrariando o sistema → o salvo vence, sem lampejo.
 Você não controla navegador — **não invente substituto para isso e não
 declare verificado o que não viu**. Relate o que deixou para a revisão.
 
