@@ -1,0 +1,1 @@
+export { formatarMensalidade } from "./mensalidade";
