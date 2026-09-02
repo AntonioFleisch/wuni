@@ -1,0 +1,60 @@
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--ink-700);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/*
+ * Qual ícone aparece é decisão do CSS, pelas mesmas condições que decidem o
+ * tema — assim ele já está certo na primeira pintura, antes de o React montar.
+ */
+.sun {
+  display: none;
+}
+
+.moon {
+  display: block;
+}
+
+@media (prefers-color-scheme: dark) {
+  :global(:root:not([data-theme="light"])) .sun {
+    display: block;
+  }
+
+  :global(:root:not([data-theme="light"])) .moon {
+    display: none;
+  }
+}
+
+:global(:root[data-theme="dark"]) .sun {
+  display: block;
+}
+
+:global(:root[data-theme="dark"]) .moon {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .toggle {
+    width: 34px;
+    height: 34px;
+  }
+}
