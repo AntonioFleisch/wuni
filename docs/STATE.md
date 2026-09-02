@@ -3,16 +3,48 @@
 > Apêndice volátil do `AGENTS.md`. Descreve **o que existe agora**, não o que
 > foi decidido. Tudo aqui tem prazo de validade.
 >
-> **Última verificação:** 2026-09-01, revisão da 104 sobre o commit
-> `f7b57b1`.
+> **Última verificação:** 2026-09-01, revisão da 105 — tokens em `2aed101`,
+> tema, fontes e amostra em `129c55c`.
 > **Atualização:** quem muda a realidade atualiza este arquivo, na mesma
 > tarefa. Ver _Manutenção_ no `AGENTS.md`.
 
 ## Marco atual
 
 Migração para a arquitetura alvo **iniciada**. O scaffold do Next está
-implementado; nenhuma página do produto foi portada ainda. `app/` contém
-somente a página inicial padrão gerada pelo `create-next-app`.
+implementado; nenhuma página do produto foi portada ainda. `app/` não tem mais
+nada do `create-next-app`: o que existe é a amostra temporária do sistema
+visual, descrita abaixo.
+
+O sistema visual foi portado para o App Router. `app/globals.css` carrega os
+design tokens copiados valor por valor de `css/style.css`, o tema escuro
+declarado duas vezes — `@media (prefers-color-scheme: dark)` com
+`:root:not([data-theme="light"])` e `:root[data-theme="dark"]` —, o reset e a
+base tipográfica. Nenhuma classe de componente entrou ali; elas virão como CSS
+Modules junto de cada página. A única adição ao legado é `color-scheme`, nos
+três blocos.
+
+Inter e Sora agora vêm por `next/font/google` como variáveis CSS, sem `<link>`
+para o Google Fonts. `app/layout.tsx` estampa `data-theme` antes da primeira
+pintura por um script inline — a exceção de `dangerouslySetInnerHTML`
+autorizada nas _Convenções_ do `AGENTS.md`, e a única ocorrência no
+repositório. `components/ThemeToggle.tsx` alterna o tema sem nunca recalcular
+qual ele deveria ser: lê `data-theme` quando presente e, quando ausente, lê
+`getComputedStyle(...).colorScheme` — o resultado da decisão que o `@media` já
+tomou. Por isso o `color-scheme` do CSS é **dependência funcional do toggle**,
+não enfeite; um comentário nos dois arquivos registra isso.
+
+O toggle **não guarda estado próprio**: o tema mora no elemento raiz, fora do
+React, e o componente o consome por `useSyncExternalStore` — `subscribe` é um
+`MutationObserver` em `data-theme`, `getSnapshot` lê o DOM e
+`getServerSnapshot` devolve `null`, que é o que mantém `aria-pressed` ausente
+até a hidratação. A primeira versão sincronizava isso com `useState` mais
+`useEffect` e caiu no `react-hooks/set-state-in-effect`; a regra estava certa,
+porque estado espelhado nasce errado e só se corrige depois de montar.
+
+`app/page.tsx` é uma **amostra temporária** do sistema visual — tiras de token
+com nome e valor computado, raios, sombras, títulos e parágrafo — para a
+revisão conseguir olhar o tema nos dois modos e nas duas larguras. Sai quando a
+landing for portada.
 
 O motor de recomendação já está portado para TypeScript puro em
 `lib/recommendation/`, com Fit Score, chance, filtros, restrição factual de
@@ -50,18 +82,20 @@ A partição da lista corta por **distância em pontos do maior fit**, padrão
 então qualquer corte percentual do máximo cai abaixo do piso e deixa a seção
 colapsável vazia. O porquê está em _Perfil pesa, não corta_, no `AGENTS.md`.
 
-Próxima tarefa: **105** — tokens, tema claro/escuro e base tipográfica no App
-Router, especificada em `docs/tasks/`. A proposta de CSS foi confirmada pelo
-mantenedor em 2026-09-01: tokens em `app/globals.css`, CSS Modules por
-componente, sem Tailwind.
+A **105 passou na revisão de código** — quatro portões rodados pelo revisor,
+os 91 tokens conferidos por script contra `css/style.css` valor por valor,
+uma única ocorrência de `dangerouslySetInnerHTML`. **Falta a verificação
+visual**, e a spec continua em `docs/tasks/` até ela acontecer. A proposta de
+CSS que a 105 aplicou foi confirmada pelo mantenedor em 2026-09-01: tokens em
+`app/globals.css`, CSS Modules por componente, sem Tailwind.
 
-**A 105 é executada por uma sessão Claude, não pelo Codex** — a usagem dele
+**A 105 foi executada por uma sessão Claude, não pelo Codex** — a usagem dele
 acabou em 2026-09-01. A revisão fica com outra sessão, conforme _Papéis_ no
 `AGENTS.md`. A verificação visual continua sendo do mantenedor: nenhum dos
 dois agentes controla navegador, e esta é a primeira tarefa que renderiza
 alguma coisa.
 
-Depois dela, a **106** é a tela de recomendações — primeira página portada e
+Próxima tarefa: a **106** é a tela de recomendações — primeira página portada e
 primeiro momento em que o motor aparece para o usuário, já com a seção
 colapsável das secundárias.
 
@@ -88,6 +122,8 @@ Nome do produto: **Wuni**.
 - ESLint 9.39.5 com `eslint-config-next` 16.3.4
 - Prettier 3.9.6 com `eslint-config-prettier` 10.1.8
 - Vitest 4.1.11
+- Inter e Sora por `next/font/google`, sem `<link>` para o Google Fonts. Não
+  entrou dependência: `next/font` vem com o Next
 - npm com lockfile; `node_modules/` e artefatos do Next ignorados
 - Fronteira de cursos em memória; sem API, banco ou autenticação
 - HTML5, CSS3 e JavaScript vanilla (ES2020) legados ainda presentes
@@ -96,7 +132,10 @@ Nome do produto: **Wuni**.
 ## Árvore
 
 ```text
-app/                    App Router; página padrão do scaffold
+app/globals.css         tokens, dois blocos de tema escuro, reset, tipografia
+app/layout.tsx          fontes, metadata pt-BR, script anti-flash, skip-link
+app/page.tsx            amostra temporária do sistema visual; sai com a landing
+components/             UI reutilizável; hoje só o ThemeToggle e seu CSS Module
 db/seed/                seed tipado dos 16 cursos e testes de invariantes
 lib/recommendation/     motor TypeScript puro e seus testes unitários
 lib/perfil/             perfil completo, parser e serialização do dado legado
@@ -147,8 +186,15 @@ npm run build
 ```
 
 O Vitest cobre o motor de recomendação, a fronteira do perfil, as invariantes
-do _seed_ e `listarCursos()` em seis arquivos, com 73 testes. A verificação
-visual continua a cargo da revisão; a 104 não renderiza interface.
+do _seed_ e `listarCursos()` em seis arquivos, com 73 testes. A 105 não
+acrescentou teste: componente de UI não exige teste unitário, conforme
+_Portões de qualidade_ no `AGENTS.md`.
+
+**A verificação visual da 105 está aberta.** É a primeira tarefa que renderiza
+interface, e nada dela foi visto em navegador: contraste nos dois temas,
+ausência de lampejo ao recarregar com tema escuro salvo, foco visível no
+`skip-link`, o `aria-pressed` acompanhando o tema e o comportamento em largura
+de telefone. `npm run dev` e a página inicial mostram tudo isso de uma vez.
 
 Os 16 warnings falsos positivos do legado foram eliminados ao ignorar `js/**`
 no ESLint. Esses arquivos usam escopo global por ordem de `<script>`, não são

@@ -260,8 +260,14 @@ padrão sem ler esta linha.
 
 **CSS.** Design tokens em `:root`. O tema escuro é declarado **duas vezes**:
 em `@media (prefers-color-scheme: dark)` e em `[data-theme="dark"]`. Ao
-adicionar um token, adicione nos três blocos. Classes em kebab-case, nomeadas
-por componente (`rec-card`, `chip-toggle`).
+adicionar um token, adicione nos três blocos.
+
+Classes em **kebab-case no CSS global** (`skip-link`, `container`, `sr-only`)
+e em **camelCase dentro de CSS Modules** (`styles.recCard`), sempre nomeadas
+por componente. A divisão é por mecanismo, não por gosto: kebab-case num
+módulo obrigaria `styles["rec-card"]` espalhado pelo JSX. Decidido na revisão
+da 105, quando a alternativa em uso — nomes de uma palavra só — não sobreviveu
+ao primeiro `rec-card-badges`.
 
 **Acessibilidade.** `skip-link`, `aria-expanded` no menu, `aria-pressed` no
 toggle de tema — botão de alternância não é revelação de conteúdo, e este
