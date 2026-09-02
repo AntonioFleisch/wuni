@@ -112,7 +112,7 @@ describe("parsePerfilArmazenado", () => {
     },
   );
 
-  it("normaliza um objeto vazio e lista todos os campos corrigidos", () => {
+  it("normaliza um objeto vazio e lista os campos obrigatórios corrigidos", () => {
     expect(resultadoOk("{}")).toEqual({
       estado: "ok",
       perfil: perfilVazio(),
@@ -120,22 +120,29 @@ describe("parsePerfilArmazenado", () => {
         "nome",
         "anoEscola",
         "escolaPublica",
-        "mediaHistorico",
         "rendaPerCapita",
         "ppi",
         "pcd",
         "orcamentoMensal",
-        "enem.linguagens",
-        "enem.humanas",
-        "enem.natureza",
-        "enem.matematica",
-        "enem.redacao",
         "interesses",
         "cidadesAceita",
         "aceitaMorarFora",
         "turno",
         "modalidade",
       ],
+    });
+  });
+
+  it("preserva sem correções o perfil legado com média em branco", () => {
+    const perfilMediaEmBranco = {
+      ...DEFAULT_PROFILE,
+      mediaHistorico: null,
+    };
+
+    expect(resultadoOk(JSON.stringify(perfilMediaEmBranco))).toEqual({
+      estado: "ok",
+      perfil: perfilMediaEmBranco,
+      camposCorrigidos: [],
     });
   });
 
@@ -173,19 +180,31 @@ describe("parsePerfilArmazenado", () => {
     expect(zero.camposCorrigidos).toEqual([]);
   });
 
-  it.each([-1, 1001, "700", null])(
-    "descarta a nota de ENEM inválida %j",
-    (nota) => {
-      const resultado = resultadoOk(
-        armazenarCom({
-          enem: { ...DEFAULT_PROFILE.enem, linguagens: nota },
-        }),
-      );
+  it.each([-1, 1001, "700"])("descarta a nota de ENEM inválida %j", (nota) => {
+    const resultado = resultadoOk(
+      armazenarCom({
+        enem: { ...DEFAULT_PROFILE.enem, linguagens: nota },
+      }),
+    );
 
-      expect(resultado.perfil.enem.linguagens).toBeUndefined();
-      expect(resultado.camposCorrigidos).toEqual(["enem.linguagens"]);
-    },
-  );
+    expect(resultado.perfil.enem.linguagens).toBeUndefined();
+    expect(resultado.camposCorrigidos).toEqual(["enem.linguagens"]);
+  });
+
+  it("não registra notas ausentes ou nulas como correção", () => {
+    const enemSemLinguagens = { ...DEFAULT_PROFILE.enem };
+    delete enemSemLinguagens.linguagens;
+
+    const ausente = resultadoOk(armazenarCom({ enem: enemSemLinguagens }));
+    const nula = resultadoOk(
+      armazenarCom({ enem: { ...DEFAULT_PROFILE.enem, linguagens: null } }),
+    );
+
+    expect(ausente.perfil.enem.linguagens).toBeUndefined();
+    expect(ausente.camposCorrigidos).toEqual([]);
+    expect(nula.perfil.enem.linguagens).toBeUndefined();
+    expect(nula.camposCorrigidos).toEqual([]);
+  });
 
   it("preserva notas válidas nos limites", () => {
     const resultado = resultadoOk(

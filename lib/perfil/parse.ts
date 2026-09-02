@@ -101,6 +101,10 @@ function normalizarEnem(value: unknown, camposCorrigidos: string[]): NotasEnem {
 
   CAMPOS_ENEM.forEach((campo) => {
     const nota = origem[campo];
+    if (!Object.prototype.hasOwnProperty.call(origem, campo) || nota === null) {
+      return;
+    }
+
     if (typeof nota === "number" && nota >= 0 && nota <= 1000) {
       enem[campo] = nota;
       return;
@@ -172,13 +176,18 @@ export function parsePerfilArmazenado(raw: string | null): ResultadoPerfil {
   }
 
   if (
-    typeof armazenado.mediaHistorico === "number" &&
-    armazenado.mediaHistorico >= 0 &&
-    armazenado.mediaHistorico <= 10
+    Object.prototype.hasOwnProperty.call(armazenado, "mediaHistorico") &&
+    armazenado.mediaHistorico !== null
   ) {
-    perfil.mediaHistorico = armazenado.mediaHistorico;
-  } else {
-    camposCorrigidos.push("mediaHistorico");
+    if (
+      typeof armazenado.mediaHistorico === "number" &&
+      armazenado.mediaHistorico >= 0 &&
+      armazenado.mediaHistorico <= 10
+    ) {
+      perfil.mediaHistorico = armazenado.mediaHistorico;
+    } else {
+      camposCorrigidos.push("mediaHistorico");
+    }
   }
 
   if (pertenceAUniao(armazenado.rendaPerCapita, RENDAS_PER_CAPITA)) {
